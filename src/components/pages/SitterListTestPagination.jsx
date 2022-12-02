@@ -107,7 +107,7 @@ const SitterListTestPagination = (props) => {
         headerGroups,
         rows,
         prepareRow,
-      } = useTable({
+      } = useTable({  
         columns,
         data: users,
       }, useSortBy);
@@ -191,7 +191,7 @@ const SitterListTestPagination = (props) => {
                     })}
                   </tr>
                 );
-              })}             
+              })}         
             </tbody>         
           </table>  
           <Typography>Page: {page}</Typography>

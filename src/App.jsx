@@ -17,12 +17,14 @@ import TestFormValidation from "./components/pages/TestFormValidation";
 import TestImagePreview from "./components/pages/TestImagePreview";
 import SearchSitterTest from "./components/pages/SearchSitterTest";
 import SitterListTestPagination from "./components/pages/SitterListTestPagination";
+import NotFoundPage from "./components/pages/404";
 
 const  App = () => {
   return (
     <Router>
       <div className="App">
         <Navbar />
+       
         <Routes>
             <Route exact path="/" element={<Home />} />  
             <Route  path="/home" element={<Home />} />  
@@ -39,6 +41,7 @@ const  App = () => {
             <Route  path="/forgetpassword" element={<ForgetPassword />} />
             <Route  path="/editsitter/:id" element={<EditSitter />} />
             <Route  path="/reset_password" element={<ResetPassword />} />
+            <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
     </Router>

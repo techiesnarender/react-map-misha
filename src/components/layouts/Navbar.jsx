@@ -23,7 +23,7 @@ const Navbar = () => {
     <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
         <Link to={"/"} className="navbar-brand">
-          Misha Infotech
+          Pet Sitting
         </Link>
         <ul className="navbar-nav mr-auto">
           <li className="nav-item active">
