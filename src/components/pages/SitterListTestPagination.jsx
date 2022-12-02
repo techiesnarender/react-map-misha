@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useTable, useSortBy } from "react-table";
 import Pagination from '@mui/material/Pagination'; 
 import UserServices from "../../services/UserServices";
-import { CircularProgress, Stack, Typography } from "@mui/material";
+import { Skeleton, Stack, Typography } from "@mui/material";
 
 
 const SitterListTestPagination = (props) => {
@@ -10,6 +10,7 @@ const SitterListTestPagination = (props) => {
 
     const [page, setPage] = useState(1);
     const [count, setCount] = useState(0);
+    const [totalItems, setTotalItems] = useState("");
     const [pageSize, setPageSize] = useState(6);
     const [searchAddress, setSearchAddress] = useState("");
     const [message, setMessage] = useState("");
@@ -43,11 +44,12 @@ const SitterListTestPagination = (props) => {
 
       UserServices.getPaginationAll(params)
         .then((response) => {
-          const { user, totalPages } = response.data;
+          const { user, totalPages, totalItems } = response.data;
           setLoading(false);
           setMessage("")
           setUsers(user);
           setCount(totalPages);
+          setTotalItems(totalItems);
           
           console.log(response.data);
         })
@@ -114,7 +116,6 @@ const SitterListTestPagination = (props) => {
 
     return (
         <>
-          <div className="row">
               <div className="col-md-3">
                 <div className="input-group mt-3">
                   <input
@@ -135,8 +136,7 @@ const SitterListTestPagination = (props) => {
                 </div>
               </div>
           </div>
-      </div>
-      
+
           <div className="mt-3 mb-3">
             {"Items per Page: "}
             <select onChange={handlePageSizeChange} value={pageSize}>
@@ -148,21 +148,20 @@ const SitterListTestPagination = (props) => {
             </select> 
           </div>
           {loading ? (
-             <Stack  style={{
-              position: 'absolute', left: '50%', top: '50%',
-              transform: 'translate(-50%, -50%)'
-            }}>
-              <CircularProgress />
-            </Stack>
-            // <Stack spacing={1}>
-            //   <Skeleton variant="rectangular" width="100%" height={60} />
-            //   <Skeleton variant="rectangular" width="100%" height={60} />
-            //   <Skeleton variant="rectangular" width="100%" height={60} />
-            //   <Skeleton variant="rectangular" width="100%" height={60} />
+            //  <Stack  style={{
+            //   position: 'absolute', left: '50%', top: '50%',
+            //   transform: 'translate(-50%, -50%)'
+            // }}>
+            //   <CircularProgress />
             // </Stack>
-            
+            <Stack spacing={1}>
+              <Skeleton variant="rectangular" width="100%" height={60} />
+              <Skeleton variant="rectangular" width="100%" height={60} />
+              <Skeleton variant="rectangular" width="100%" height={60} />
+              <Skeleton variant="rectangular" width="100%" height={60} />
+            </Stack>
             ) : 
-            <div className="table-responsive">
+            (
           <table className="table table-striped table-bordered table-hover" {...getTableProps()} >
             <thead>
               {headerGroups.map((headerGroup) => (
@@ -178,27 +177,28 @@ const SitterListTestPagination = (props) => {
                 </tr>
               ))}
             </thead>
-            
-            <tbody {...getTableBodyProps()}>
-              {rows.map((row, i) => {
-                prepareRow(row);
-                return (
-                  <tr {...row.getRowProps()}>
-                    {row.cells.map((cell) => {
-                      return (
-                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                      );
-                    })}
-                  </tr>
-                );
-              })}         
-            </tbody>         
-          </table>  
+                <tbody {...getTableBodyProps()}>
+                { rows === '' ? (<tr><td>No Records Found!</td></tr>) :
+                (rows.length > 0 && rows.map((row, i) => {      
+                  prepareRow(row);
+                  return (
+                    <tr {...row.getRowProps()}>
+                      {row.cells.map((cell) => {
+                        return (
+                          <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                        );
+                      })}
+                    </tr>
+                  );
+                }))
+                }  
+              </tbody> 
+          </table>
+    )}   
+           
+           <div className="float-right">Showing the first {users.length} results of {totalItems} rows</div>  
           <Typography>Page: {page}</Typography>
-          <div style={{
-              position: 'absolute', left: '50%',
-              transform: 'translate(-50%, -50%)'
-            }}>
+          <div style={{position: 'absolute', left: '50%',transform: 'translate(-50%, -50%)'}}>
               <Pagination 
                 count={count}
                 page={page}
@@ -209,9 +209,7 @@ const SitterListTestPagination = (props) => {
                 onChange={handlePageChange}
                 showFirstButton showLastButton
               />
-          </div>
-          </div>
-           }    
+          </div> 
 
            {message && (    
               <span className="alert alert-danger " role="alert" 
