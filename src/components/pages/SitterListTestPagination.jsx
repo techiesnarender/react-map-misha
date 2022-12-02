@@ -2,8 +2,27 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useTable, useSortBy } from "react-table";
 import Pagination from '@mui/material/Pagination'; 
 import UserServices from "../../services/UserServices";
-import { Skeleton, Stack, Typography } from "@mui/material";
+import { Paper, Skeleton, Stack, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
 
 const SitterListTestPagination = (props) => {
     const [users, setUsers] = useState([]);
@@ -137,7 +156,7 @@ const SitterListTestPagination = (props) => {
               </div>
           </div>
 
-          <div className="mt-3 mb-3">
+          <div className="mt-3 mb-3 ml-3">
             {"Items per Page: "}
             <select onChange={handlePageSizeChange} value={pageSize}>
               {pageSizes.map((size) => (
@@ -162,7 +181,43 @@ const SitterListTestPagination = (props) => {
             </Stack>
             ) : 
             (
-          <table className="table table-striped table-bordered table-hover" {...getTableProps()} >
+             <div>
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="customized table" {...getTableProps()}>
+                <TableHead>
+                      {headerGroups.map(headerGroup => (
+                        <TableRow {...headerGroup.getHeaderGroupProps()}>
+                          {headerGroup.headers.map(column => (
+                            <StyledTableCell {...column.getHeaderProps(column.getSortByToggleProps())}>
+                              {column.render('Header')}
+                              <span>
+                                {column.isSorted ? (column.isSortedDesc ? '🔽':'🔼') : ''}
+                              </span>
+                            </StyledTableCell>
+                          ))}
+                        </TableRow>
+                      ))}
+                    </TableHead>
+                    <TableBody {...getTableBodyProps()}>
+                        {rows.map((row, i) => {
+                          prepareRow(row)
+                          return (
+                            <StyledTableRow  {...row.getRowProps()}  key={row.id}
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                              {row.cells.map(cell => {
+                                return (
+                                  <StyledTableCell  {...cell.getCellProps()} component="th" scope="row">
+                                    {cell.render('Cell')}
+                                  </StyledTableCell>
+                                )
+                              })}
+                            </StyledTableRow>
+                          )
+                        })}
+                      </TableBody>
+                </Table>
+              </TableContainer>
+              {/* <table className="table table-striped table-bordered table-hover" {...getTableProps()} >
             <thead>
               {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
@@ -193,11 +248,12 @@ const SitterListTestPagination = (props) => {
                 }))
                 }  
               </tbody> 
-          </table>
-    )}   
-           
+          </table> */}
+             </div>
+          
+    )}    
            <div className="float-right">Showing the first {users.length} results of {totalItems} rows</div>  
-          <Typography>Page: {page}</Typography>
+          <Typography>Page: {page} of {count}</Typography>
           <div style={{position: 'absolute', left: '50%',transform: 'translate(-50%, -50%)'}}>
               <Pagination 
                 count={count}
@@ -210,7 +266,6 @@ const SitterListTestPagination = (props) => {
                 showFirstButton showLastButton
               />
           </div> 
-
            {message && (    
               <span className="alert alert-danger " role="alert" 
               style={{
