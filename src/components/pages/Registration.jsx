@@ -2,126 +2,134 @@
 import React, {useState, useEffect, useRef} from "react";
 import UserServices from "../../services/UserServices";
 
-function initMap() {
-	var mapOptions, map, marker, searchBox,
-	infoWindow = '',
-	addressEl = document.getElementById( 'map-search' ),
-	latEl = document.getElementById( 'latitude' ),
-	longEl = document.getElementById( 'longitude' ),
-	element = document.getElementById( 'map-canvas' );
 
-mapOptions = {
-	zoom: 8,
-	center: new google.maps.LatLng( 0,0 ),
-	disableDefaultUI: false, // Disables the controls like zoom control on the map if set to true
-	scrollWheel: true, // If set to false disables the scrolling on the map.
-	draggable: true, // If set to false , you cannot move the map around.
-};
-map = new google.maps.Map( element, mapOptions ); // Till this like of code it loads up the map.
-marker = new google.maps.Marker({
-	position: mapOptions.center,
-	map: map,
-	// icon: 'http://pngimages.net/sites/default/files/google-maps-png-image-70164.png',
-	draggable: true
-});
+const Registration = () => {
 
- searchBox = new google.maps.places.SearchBox(addressEl);
-/**
- * When the place is changed on search box, it takes the marker to the searched location.
- */
-google.maps.event.addListener( searchBox, 'places_changed', function () {
-	var places = searchBox.getPlaces(),
-		bounds = new google.maps.LatLngBounds(),
-		i, place, lat, long,
-		addresss = places[0].formatted_address;
-		console.log(addresss);
-		
-// eslint-disable-next-line
-	for( i = 0; place = places[i]; i++ ) {
-		bounds.extend( place.geometry.location );
-		marker.setPosition( place.geometry.location );  // Set marker position new.
-	}
 
-	map.fitBounds( bounds );  // Fit to the bound
-	map.setZoom( 15 ); // This function sets the zoom to 15, meaning zooms to level 15.
-
-	lat = marker.getPosition().lat();
-	long = marker.getPosition().lng();
-	console.log(lat, long);
-	//latEl.value = lat;
-	//longEl.value = long;
-
-	setNativeValue(addressEl, addresss);	
-	addressEl.dispatchEvent(new Event('input', {bubbles: true}));
-
-	setNativeValue(latEl, lat);	
-	latEl.dispatchEvent(new Event('input', { bubbles: true }));
-	setNativeValue(longEl, long);
-	longEl.dispatchEvent(new Event('input', { bubbles: true }));
-	//setMapsData(address);
-	if ( infoWindow ) {
-		infoWindow.close();
-	}
-	infoWindow = new google.maps.InfoWindow({
-		content: addresss
+useEffect(() => {
+	
+	function initMap() {
+		var mapOptions, map, marker, searchBox,
+		infoWindow = '',
+		addressEl = document.getElementById( 'map-search' ),
+		latEl = document.getElementById( 'latitude' ),
+		longEl = document.getElementById( 'longitude' ),
+		element = document.getElementById( 'map-canvas' );
+	
+	mapOptions = {
+		zoom: 8,
+		center: new google.maps.LatLng( 0,0 ),
+		disableDefaultUI: false, // Disables the controls like zoom control on the map if set to true
+		scrollWheel: true, // If set to false disables the scrolling on the map.
+		draggable: true, // If set to false , you cannot move the map around.
+	};
+	map = new google.maps.Map( element, mapOptions ); // Till this like of code it loads up the map.
+	marker = new google.maps.Marker({
+		position: mapOptions.center,
+		map: map,
+		// icon: 'http://pngimages.net/sites/default/files/google-maps-png-image-70164.png',
+		draggable: true
 	});
-
-	infoWindow.open( map, marker );
-} );
-/**
- * Finds the new position of the marker when the marker is dragged.
- */
-google.maps.event.addListener( marker, "dragend", function () {
-	var lat, long, address;
-
-	console.log( 'i am dragged' );
-	lat = marker.getPosition().lat();
-	long = marker.getPosition().lng();
-
-	var geocoder = new google.maps.Geocoder();
-	geocoder.geocode( { latLng: marker.getPosition() }, function ( result, status ) {
-		if ( 'OK' === status ) {  // This line can also be written like if ( status == google.maps.GeocoderStatus.OK ) {
-			address = result[0].formatted_address;
-			//addressEl.value = address;
-			//latEl.value = lat;
-			//longEl.value = long;
-
-			setNativeValue(latEl, lat);			
-			latEl.dispatchEvent(new Event('input', { bubbles: true }));
-			setNativeValue(longEl, long);
-			longEl.dispatchEvent(new Event('input', { bubbles: true }));
-			//setMapsData(address);
-
-		} else {
-			console.log( 'Geocode was not successful for the following reason: ' + status );
+	
+	 searchBox = new google.maps.places.SearchBox(addressEl);
+	/**
+	 * When the place is changed on search box, it takes the marker to the searched location.
+	 */
+	google.maps.event.addListener( searchBox, 'places_changed', function () {
+		var places = searchBox.getPlaces(),
+			bounds = new google.maps.LatLngBounds(),
+			i, place, lat, long,
+			addresss = places[0].formatted_address;
+			console.log(addresss);
+			
+	// eslint-disable-next-line
+		for( i = 0; place = places[i]; i++ ) {
+			bounds.extend( place.geometry.location );
+			marker.setPosition( place.geometry.location );  // Set marker position new.
 		}
+	
+		map.fitBounds( bounds );  // Fit to the bound
+		map.setZoom( 15 ); // This function sets the zoom to 15, meaning zooms to level 15.
+	
+		lat = marker.getPosition().lat();
+		long = marker.getPosition().lng();
+		console.log(lat, long);
+		//latEl.value = lat;
+		//longEl.value = long;
+	
+		setNativeValue(addressEl, addresss);	
+		addressEl.dispatchEvent(new Event('input', {bubbles: true}));
+	
+		setNativeValue(latEl, lat);	
+		latEl.dispatchEvent(new Event('input', { bubbles: true }));
+		setNativeValue(longEl, long);
+		longEl.dispatchEvent(new Event('input', { bubbles: true }));
+		//setMapsData(address);
 		if ( infoWindow ) {
 			infoWindow.close();
 		}
 		infoWindow = new google.maps.InfoWindow({
-			content: address
+			content: addresss
 		});
-
+	
 		infoWindow.open( map, marker );
 	} );
-});
-}
-
-window.initMap = initMap;
-
-function setNativeValue(element, value) {
-	const valueSetter = Object.getOwnPropertyDescriptor(element, 'value').set;
-	const prototype = Object.getPrototypeOf(element);
-	const prototypeValueSetter = Object.getOwnPropertyDescriptor(prototype, 'value').set;
-  
-	if (valueSetter && valueSetter !== prototypeValueSetter) {
-	  prototypeValueSetter.call(element, value);
-	} else {
-	  valueSetter.call(element, value);
+	/**
+	 * Finds the new position of the marker when the marker is dragged.
+	 */
+	google.maps.event.addListener( marker, "dragend", function () {
+		var lat, long, address;
+	
+		console.log( 'i am dragged' );
+		lat = marker.getPosition().lat();
+		long = marker.getPosition().lng();
+	
+		var geocoder = new google.maps.Geocoder();
+		geocoder.geocode( { latLng: marker.getPosition() }, function ( result, status ) {
+			if ( 'OK' === status ) {  // This line can also be written like if ( status == google.maps.GeocoderStatus.OK ) {
+				address = result[0].formatted_address;
+				//addressEl.value = address;
+				//latEl.value = lat;
+				//longEl.value = long;
+	
+				setNativeValue(latEl, lat);			
+				latEl.dispatchEvent(new Event('input', { bubbles: true }));
+				setNativeValue(longEl, long);
+				longEl.dispatchEvent(new Event('input', { bubbles: true }));
+				//setMapsData(address);
+	
+			} else {
+				console.log( 'Geocode was not successful for the following reason: ' + status );
+			}
+			if ( infoWindow ) {
+				infoWindow.close();
+			}
+			infoWindow = new google.maps.InfoWindow({
+				content: address
+			});
+	
+			infoWindow.open( map, marker );
+		} );
+	});
 	}
-  }
+	
+	window.initMap = initMap;
+	
+	function setNativeValue(element, value) {
+		const valueSetter = Object.getOwnPropertyDescriptor(element, 'value').set;
+		const prototype = Object.getPrototypeOf(element);
+		const prototypeValueSetter = Object.getOwnPropertyDescriptor(prototype, 'value').set;
+	  
+		if (valueSetter && valueSetter !== prototypeValueSetter) {
+		  prototypeValueSetter.call(element, value);
+		} else {
+		  valueSetter.call(element, value);
+		}
+	  }
 
-const Registration = () => {
+}, [])
+
+
 	const effectRan = useRef(false);
 	
 	useEffect(() => {
