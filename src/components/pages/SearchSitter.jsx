@@ -2,10 +2,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import UserServices from "../../services/UserServices";
 
-
-
 const SearchSitter = () => {
 
+  // const [search, setSearch] = useState("");
   const effectRan = useRef(false);
   const click_ref = React.useRef(null);
   useEffect(() => {
@@ -38,10 +37,7 @@ const SearchSitter = () => {
    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
- 
-
   useEffect(() => {
-
 
   var neighborhoods = [];
   neighborhoods =
@@ -283,6 +279,32 @@ const SearchSitter = () => {
       {/************  Show list of sitter with nearest location  ***********************/}
 
       <div className="container" style={{ marginTop: "10px" }}>
+            {/* <input type="text" placeholder="Search..."  onChange={(event) => {
+                setSearch(event.target.value)
+            }}/>
+        */}
+        {/* {users &&
+              users.length > 0 &&
+              users.filter((user) => {
+                if (search === "") return user; // searchTerm is in scope?
+                if (user.address.toLowerCase().includes(search.toLowerCase())) {
+                  return user;
+                }else{
+                  return false
+                }
+            }).map((user, index) => (
+                // eslint-disable-next-line
+                    <div  className={`card-body list-item ${active === index && "active"}`} onClick={() => setActive(index)} key={user.id}>
+                      <div className="row ">
+                        <div className="col-sm-8">
+                          <h6 className="card-subtitle text-muted" >
+                            {user.address}
+                          </h6>
+                        </div>
+                      </div>
+                    </div>                 
+              ))} */}
+        
         <div className="row">
           <div className="col-sm-6">
             {users &&

@@ -173,11 +173,12 @@ const SitterListTestPagination = (props) => {
             // }}>
             //   <CircularProgress />
             // </Stack>
+
             <Stack spacing={1}>
-              <Skeleton variant="rectangular" width="100%" height={60} />
-              <Skeleton variant="rectangular" width="100%" height={60} />
-              <Skeleton variant="rectangular" width="100%" height={60} />
-              <Skeleton variant="rectangular" width="100%" height={60} />
+              <Skeleton variant="rectangular" width="100%" height={60}  />
+              <Skeleton variant="rectangular" width="100%" height={60}  />
+              <Skeleton variant="rectangular" width="100%" height={60}  />
+              <Skeleton variant="rectangular" width="100%" height={60}  />
             </Stack>
             ) : 
             (
