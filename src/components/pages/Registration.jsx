@@ -1,5 +1,6 @@
 /*global google*/
 import React, {useState, useEffect, useRef} from "react";
+import { Helmet } from "react-helmet-async";
 import UserServices from "../../services/UserServices";
 
 
@@ -309,6 +310,9 @@ const validateEmail = (email) => {
 
     return(
 		<div className="submit-form">
+			<Helmet>
+				<title>Register | Misha Infotech </title>
+			</Helmet>
 			{submitted ? (
 				<div>
 					<h4>You submitted successfully!</h4>

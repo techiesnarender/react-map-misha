@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
 import AuthService from "../../services/auth.service";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
 
@@ -55,6 +56,9 @@ const Login = () => {
       };
   return (
     <div className="col-md-12">
+      <Helmet>
+        <title>Login | Misha Infotech </title>
+      </Helmet>
       <div className="card card-container">
         <img
           src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"

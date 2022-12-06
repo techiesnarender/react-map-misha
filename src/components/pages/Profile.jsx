@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 // import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import UserServices from "../../services/UserServices";
@@ -95,7 +96,12 @@ const upload = () => {
 	// 		});
 	// } ;
   return (
+    <>
+    <Helmet>
+        <title>Profile | Misha Infotech </title>
+      </Helmet>
     <div className="container">
+     
       <h3 className="text-center"><strong>Sitter Profile</strong></h3>
       {loading && (
         <span className="spinner-border" style={{ position: "fixed", zIndex:"1031", top:"50%", left: "50%", transform: "initial" }}></span>
@@ -218,6 +224,7 @@ const upload = () => {
           currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
       </ul> */}
     </div>
+    </>
   );
 };
 export default Profile;

@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useRef} from "react";
+import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import UserServices from "../../services/UserServices";
 
@@ -34,6 +35,9 @@ const  SitterList = () => {
     };
     return (
         <>
+        <Helmet>
+        <title>Sitter List | Misha Infotech </title>
+        </Helmet>
         <h4 className="text-center">Sitter Records</h4>	
         {loading && (
         <span className="spinner-border" style={{ position: "fixed", zIndex:"1031", top:"50%", left: "50%", transform: "initial" }}></span>

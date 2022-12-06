@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { Helmet } from 'react-helmet-async';
 import {useParams, useNavigate} from 'react-router-dom'
 import UserServices from '../../services/UserServices';
 
@@ -68,6 +69,9 @@ const EditSitter = () => {
       };    
   return (
     <div>
+      <Helmet>
+        <title>Edit Sitter | Misha Infotech </title>
+      </Helmet>
     {currentUser ? (
       <div className="edit-form">
         <h4>Edit Sitter</h4>

@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import AuthService from '../../services/auth.service';
+import { Helmet } from 'react-helmet-async';
 
 const ChangePassword = () => {
 
@@ -56,6 +57,9 @@ const ChangePassword = () => {
     }
   return (
     <div className="col-md-12">
+       <Helmet>
+        <title>Change Password | Misha Infotech </title>
+      </Helmet>
       <div className="card card-container">
       <div className="card-header p-3 mb-2 bg-dark text-white">
             Change Password

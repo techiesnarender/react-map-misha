@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import AuthService from '../../services/auth.service';
+import { Helmet } from 'react-helmet-async';
 
 function ForgetPassword() {
 
@@ -48,6 +49,9 @@ function ForgetPassword() {
     }
   return (
     <div className="container" style={{width: '40rem'}}>
+      <Helmet>
+        <title>Forget Password | Misha Infotech </title>
+      </Helmet>
 			<div className="card">
 				  <div className="card-header alert-danger text-center h3">
 				  <h2>Forgot Password</h2>

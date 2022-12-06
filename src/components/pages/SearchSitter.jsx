@@ -1,5 +1,6 @@
 /*global google*/
 import React, { useEffect, useRef, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import UserServices from "../../services/UserServices";
 
 const SearchSitter = () => {
@@ -233,6 +234,9 @@ const SearchSitter = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Search Sitter | Misha Infotech </title>
+      </Helmet>
       <h4 className="text-center">Search Sitter</h4>
       <div className="container">
         <div className="input-group">
