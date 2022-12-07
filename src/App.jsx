@@ -18,13 +18,14 @@ import TestImagePreview from "./components/pages/TestImagePreview";
 import SearchSitterTest from "./components/pages/SearchSitterTest";
 import SitterListTestPagination from "./components/pages/SitterListTestPagination";
 import NotFoundPage from "./components/pages/404";
+import MatrialUiTable from "./components/pages/MatrialUiTable";
+
 
 const  App = () => {
   return (
     <Router>
       <div className="App">
         <Navbar />
-       
         <Routes>
             <Route exact path="/" element={<Home />} />  
             <Route  path="/home" element={<Home />} />  
@@ -32,6 +33,7 @@ const  App = () => {
             <Route  path="/search" element={< SearchSitter />} />
             <Route  path="/searchSitter" element={< SearchSitterTest />} />
             <Route  path="/sitterlisttest" element={< SitterListTestPagination />} />
+            <Route  path="/sitterMatUi" element={< MatrialUiTable />} />
             <Route  path="/formvalidation" element={< TestFormValidation />} />
             <Route  path="/imagepreview" element={< TestImagePreview />} />
             <Route  path="/admin/sitterlist" element={<SitterList />} />

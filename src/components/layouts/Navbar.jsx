@@ -36,9 +36,14 @@ const Navbar = () => {
               Search Sitter
             </Link>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link to={"/sitterlisttest"} className="nav-link">
               Pagination List
+            </Link>
+          </li> */}
+          <li className="nav-item">
+            <Link to={"/sitterMatUi"} className="nav-link">
+            Material UI Pagination
             </Link>
           </li>
           {/* <li className="nav-item">

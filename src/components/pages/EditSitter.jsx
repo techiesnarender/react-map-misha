@@ -1,7 +1,10 @@
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid} from '@mui/material';
 import React, {useState, useEffect} from 'react'
 import { Helmet } from 'react-helmet-async';
 import {useParams, useNavigate} from 'react-router-dom'
 import UserServices from '../../services/UserServices';
+import ErrorIcon from '@mui/icons-material/Error';
+import { red } from '@mui/material/colors';
 
 const EditSitter = () => {
     const {id} = useParams();
@@ -20,6 +23,18 @@ const EditSitter = () => {
     const [currentUser, setCurrentUser] = useState(initialUserService);
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
+    const [loadingUpdate, setLoadingUpdate] = useState(false);
+    const [loadingDelete, setLoadingDelete] = useState(false);
+
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
 
     const getUser = id => {
       setLoading(true);
@@ -46,24 +61,33 @@ const EditSitter = () => {
       };
   
     const updateUser = () => {
+      setLoadingUpdate(true);
         UserServices.update(currentUser.id, currentUser)
         .then(response => {
+          setLoadingUpdate(false);
             setCurrentUser({ ...currentUser});
           console.log(response.data);
           setMessage("The User details was updated successfully!");
         })
         .catch(e => {
+          setLoadingUpdate(false);
           console.log(e);
         });
     };
 
     const deleteUser = () => {
+      setLoading(true);
+      setLoadingDelete(true);
         UserServices.remove(currentUser.id)
           .then(response => {
+            setLoading(false);
+            setLoadingDelete(false);
             console.log(response.data);
             navigate("/admin/sitterlist");
           })
           .catch(e => {
+            setLoading(false);
+            setLoadingDelete(false);
             console.log(e);
           });
       };    
@@ -146,15 +170,53 @@ const EditSitter = () => {
             />
           </div>
         </form>
-        <button className="btn btn-danger mr-2" onClick={deleteUser}>
+        {/* <button className="btn btn-danger mr-2" onClick={deleteUser}>
           Delete
-        </button>
+        </button> */}
+        
+        
+      <Button variant="contained"  color="error" onClick={handleClickOpen} className="mr-2">
+        Delete
+      </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+          <Grid container direction="column" alignItems="center" wrap="nowrap" >
+              <ErrorIcon sx={{ fontSize: 100, color: red[500] }} />
+          </Grid>
+         <DialogTitle>{"Are you sure?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+          Once deleted, you will not be able to recover this user!
+            <div>
+                {loadingDelete && (
+                    <span className="spinner-border" align="center" sx={{
+                      textAlign: 'center',
+                    }}></span>
+                  )}
+              </div>
+          </DialogContentText>
+
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" color="success" onClick={handleClose}>No</Button>
+          <Button variant="contained"  color="error" onClick={deleteUser} autoFocus>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
         <button
-          type="submit"
           className="btn btn-success"
           onClick={updateUser}
+          disabled={loadingUpdate}
         >
-          Update
+           {loadingUpdate && (
+                <span className="spinner-border spinner-border-sm" ></span>
+              )}
+         <span> Update</span> 
         </button>
         {message && (
               <div

@@ -1,30 +1,30 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { useTable, useSortBy } from "react-table";
+import React, { useState, useEffect } from "react";
 import Pagination from '@mui/material/Pagination'; 
 import UserServices from "../../services/UserServices";
 import { Paper, Skeleton, Stack, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+  }));
+  
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+      border: 0,
+    },
+  }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
-
-const SitterListTestPagination = () => {
+const MatrialUiTable = () => {
   
     const [users, setUsers] = useState([]);
 
@@ -36,7 +36,7 @@ const SitterListTestPagination = () => {
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
 
-  const pageSizes = [6, 9];
+  const pageSizes = [ 6, 9 , 15 ];
 
   const onChangeSearchAddress = (e) => {
     const searchAddress = e.target.value;
@@ -93,47 +93,6 @@ const SitterListTestPagination = () => {
       setPage(1);
     };
 
-    const columns = useMemo(
-        () => [
-          {
-            Header: "Contact Name",
-            accessor: "contactname",
-          },
-          {
-            Header: "Company Name",
-            accessor: "company",
-          },
-          {
-            Header: "Email",
-            accessor: "email",
-          },
-          {
-            Header: "Address",
-            accessor: "address",
-          },
-          {
-            Header: "Open Time",
-            accessor: "open",
-          },
-          {
-            Header: "Charges",
-            accessor: "chargesperhour",
-          },
-        ],
-        []
-      );
-    
-      const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow,
-      } = useTable({  
-        columns,
-        data: users,
-      }, useSortBy);
-
     return (
         <>
               <div className="col-md-3">
@@ -150,6 +109,7 @@ const SitterListTestPagination = () => {
                     className="btn btn-outline-secondary"
                     type="button"
                     onClick={retrieveTutorials}
+                    autoFocus
                   >
                     Search
                   </button>
@@ -185,38 +145,58 @@ const SitterListTestPagination = () => {
             (
              <div>
               <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="customized table" {...getTableProps()}>
+                <Table sx={{ minWidth: 650 }} size="small" aria-label="customized table">
                 <TableHead>
-                      {headerGroups.map(headerGroup => (
-                        <TableRow {...headerGroup.getHeaderGroupProps()}>
-                          {headerGroup.headers.map(column => (
-                            <StyledTableCell {...column.getHeaderProps(column.getSortByToggleProps())}>
-                              {column.render('Header')}
-                              <span>
-                                {column.isSorted ? (column.isSortedDesc ? '🔽':'🔼') : ''}
-                              </span>
-                            </StyledTableCell>
-                          ))}
+                        <TableRow>
+                            <StyledTableCell>Contact Name</StyledTableCell>
+                            <StyledTableCell>Company Name</StyledTableCell>
+                            <StyledTableCell>Email</StyledTableCell>
+                            <StyledTableCell>Address</StyledTableCell>
+                            <StyledTableCell>Open Time</StyledTableCell>
+                            <StyledTableCell>Charges Per Hours</StyledTableCell>
+                            <StyledTableCell>Action</StyledTableCell>
                         </TableRow>
-                      ))}
-                    </TableHead>
-                    <TableBody {...getTableBodyProps()}>
-                        {rows.map((row, i) => {
-                          prepareRow(row)
-                          return (
-                            <StyledTableRow  {...row.getRowProps()}  key={row.id}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                              {row.cells.map(cell => {
-                                return (
-                                  <StyledTableCell  {...cell.getCellProps()} component="th" scope="row">
-                                    {cell.render('Cell')}
-                                  </StyledTableCell>
-                                )
-                              })}
-                            </StyledTableRow>
-                          )
-                        })}
-                      </TableBody>
+                        </TableHead>                      
+                    <TableBody>   
+                    {users?.map((row) => (
+                            <StyledTableRow key={row.id}>
+                            <StyledTableCell component="th" scope="row">
+                                {row.contactname}
+                            </StyledTableCell>
+                            <StyledTableCell>{row.company}</StyledTableCell>
+                            <StyledTableCell>{row.email}</StyledTableCell>
+                            <StyledTableCell>{row.address}</StyledTableCell>
+                            <StyledTableCell>{row.open}</StyledTableCell>
+                            <StyledTableCell>{row.chargesperhour}</StyledTableCell>
+                            <StyledTableCell>
+                            <Link to={"/editsitter/" + row.id} className="btn btn-sm btn-warning">
+                                Edit
+                            </Link>
+                            </StyledTableCell>
+                            
+                            </StyledTableRow> 
+                    )) || 
+                    <TableRow>
+                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                        <Paper
+                          sx={{
+                            textAlign: 'center',
+                          }}
+                        >
+                          <Typography variant="h6" paragraph>
+                            Not found
+                          </Typography>
+
+                          <Typography variant="body2">
+                            No results found for &nbsp;
+                            <strong>&quot;{searchAddress}&quot;</strong>.
+                            <br /> Try checking for typos or using complete words.
+                          </Typography>
+                        </Paper>
+                      </TableCell>
+                    </TableRow>     
+                     }             
+                    </TableBody>         
                 </Table>
               </TableContainer>
               {/* <table className="table table-striped table-bordered table-hover" {...getTableProps()} >
@@ -254,7 +234,7 @@ const SitterListTestPagination = () => {
              </div>
           
     )}    
-           <div className="float-right">Showing the first {users.length} results of {totalItems} rows</div>  
+           <div className="float-right">Showing the first {users?.length} results of {totalItems} rows</div>  
           <Typography>Page: {page} of {count}</Typography>
           <div style={{position: 'absolute', left: '50%',transform: 'translate(-50%, -50%)'}}>
               <Pagination 
@@ -280,4 +260,4 @@ const SitterListTestPagination = () => {
       </>
       );
     };
-    export default SitterListTestPagination;
+    export default MatrialUiTable;
