@@ -3,7 +3,7 @@ import { useTable, useSortBy } from "react-table";
 import Pagination from '@mui/material/Pagination'; 
 import UserServices from "../../services/UserServices";
 import { Paper, Skeleton, Stack, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-
+//import { COLUMNS } from "../pages/columns";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -25,8 +25,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const SitterListTestPagination = (props) => {
-    const [users, setUsers] = useState([]);
 
+  console.log(props.user);
+
+    const [users, setUsers] = useState([]);
     const [page, setPage] = useState(1);
     const [count, setCount] = useState(0);
     const [totalItems, setTotalItems] = useState("");
@@ -70,7 +72,7 @@ const SitterListTestPagination = (props) => {
           setCount(totalPages);
           setTotalItems(totalItems);
           
-          console.log(response.data);
+          //console.log(response.data);
         })
         .catch((e) => {
           setLoading(false);
@@ -130,7 +132,7 @@ const SitterListTestPagination = (props) => {
         prepareRow,
       } = useTable({  
         columns,
-        data: users,
+        data: useMemo(() => users , [users]),
       }, useSortBy);
 
     return (
