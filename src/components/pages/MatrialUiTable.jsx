@@ -148,6 +148,7 @@ const MatrialUiTable = () => {
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="customized table">
                 <TableHead>
                         <TableRow>
+                            <StyledTableCell>S. No.</StyledTableCell>
                             <StyledTableCell>Contact Name</StyledTableCell>
                             <StyledTableCell>Company Name</StyledTableCell>
                             <StyledTableCell>Email</StyledTableCell>
@@ -158,14 +159,15 @@ const MatrialUiTable = () => {
                         </TableRow>
                         </TableHead>                      
                     <TableBody>   
-                    {users?.map((row) => (
+                    {users?.map((row, index) => (
                             <StyledTableRow key={row.id}>
                             <StyledTableCell component="th" scope="row">
-                                {row.contactname}
+                            {pageSize * (page-1)+ index+1}
                             </StyledTableCell>
+                            <StyledTableCell >{row.contactname}</StyledTableCell>
                             <StyledTableCell>{row.company}</StyledTableCell>
                             <StyledTableCell>{row.email}</StyledTableCell>
-                            <StyledTableCell>{row.address}</StyledTableCell>
+                            <StyledTableCell>{row.address.substring(0, 30)} ...{" "} {row.address.substr(row.address.length - 20)}</StyledTableCell>
                             <StyledTableCell>{row.open}</StyledTableCell>
                             <StyledTableCell>{row.chargesperhour}</StyledTableCell>
                             <StyledTableCell>
@@ -177,7 +179,7 @@ const MatrialUiTable = () => {
                             </StyledTableRow> 
                     )) || 
                     <TableRow>
-                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                      <TableCell align="center" colSpan={8} sx={{ py: 3 }}>
                         <Paper
                           sx={{
                             textAlign: 'center',
