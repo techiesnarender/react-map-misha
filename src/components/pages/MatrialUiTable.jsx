@@ -148,7 +148,7 @@ const MatrialUiTable = () => {
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="customized table">
                 <TableHead>
                         <TableRow>
-                            <StyledTableCell>S. No.</StyledTableCell>
+                            <StyledTableCell>Sr. No.</StyledTableCell>
                             <StyledTableCell>Contact Name</StyledTableCell>
                             <StyledTableCell>Company Name</StyledTableCell>
                             <StyledTableCell>Email</StyledTableCell>
