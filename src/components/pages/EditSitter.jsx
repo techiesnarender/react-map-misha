@@ -61,16 +61,19 @@ const EditSitter = () => {
       };
   
     const updateUser = () => {
+      setLoading(true);
       setLoadingUpdate(true);
         UserServices.update(currentUser.id, currentUser)
         .then(response => {
           setLoadingUpdate(false);
+          setLoading(false);
             setCurrentUser({ ...currentUser});
           console.log(response.data);
           setMessage("The User details was updated successfully!");
         })
         .catch(e => {
           setLoadingUpdate(false);
+          setLoading(false);
           console.log(e);
         });
     };
