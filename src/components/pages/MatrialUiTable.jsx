@@ -41,6 +41,7 @@ const MatrialUiTable = () => {
   const onChangeSearchAddress = (e) => {
     const searchAddress = e.target.value;
     setSearchAddress(searchAddress);
+    setPage(1);
   };
 
   const getRequestParams = (searchAddress, page, pageSize) => {
@@ -175,7 +176,6 @@ const MatrialUiTable = () => {
                                 Edit
                             </Link>
                             </StyledTableCell>
-                            
                             </StyledTableRow> 
                     )) || 
                     <TableRow>
@@ -234,7 +234,6 @@ const MatrialUiTable = () => {
               </tbody> 
           </table> */}
              </div>
-          
     )}    
            <div className="float-right">Showing the first {users?.length} results of {totalItems} rows</div>  
           <Typography>Page: {page} of {count}</Typography>
