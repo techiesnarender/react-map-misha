@@ -310,7 +310,7 @@ const SearchSitter = () => {
               ))} */}
         
         <div className="row">
-          <div className="col-sm-6">
+          <div className="col-sm-6 col-md-6 col-lg-6 col-xs-12">
             {users &&
               users.length > 0 &&
               users.map((user, index) => (
@@ -347,7 +347,7 @@ const SearchSitter = () => {
                 </a>
               ))}
           </div>
-          <div className="col-sm-6">
+          <div className="col-sm-6 col-md-6 col-lg-6 col-xs-12">
             {/*Google map*/}
             <div id="map-canvas-search" />
           </div>
