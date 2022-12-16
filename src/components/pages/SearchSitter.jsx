@@ -27,6 +27,7 @@ const SearchSitter = () => {
   const [searchLong, setSearchLong] = useState("");
   const [loading, setLoading] = useState(false);
   const [active, setActive] = useState(null);
+  // const [search, setSearch] = useState([]);
 
   useEffect(() => {
     if (effectRan.current === false) {
@@ -39,7 +40,6 @@ const SearchSitter = () => {
   }, []);
 
   useEffect(() => {
-
   var neighborhoods = [];
   neighborhoods =
     users &&

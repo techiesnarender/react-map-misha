@@ -49,6 +49,10 @@ const getPaginationAll = (params) => {
  
 };
 
+const getGlobalSearch = params => {
+  return http.get("/users/paging", { params });
+};
+
 const UserServices =  {
   getAll,
   get,
@@ -58,7 +62,8 @@ const UserServices =  {
   findNearestLocation,
   upload,
   getPaginationAll,
-  getPublicAll
+  getPublicAll,
+  getGlobalSearch
 };
 
 export default  UserServices;

@@ -19,6 +19,7 @@ import SearchSitterTest from "./components/pages/SearchSitterTest";
 import SitterListTestPagination from "./components/pages/SitterListTestPagination";
 import NotFoundPage from "./components/pages/404";
 import MatrialUiTable from "./components/pages/MatrialUiTable";
+import Search from "./components/pages/search";
 
 
 const  App = () => {
@@ -31,6 +32,7 @@ const  App = () => {
             <Route  path="/home" element={<Home />} />  
             <Route  path="/register" element={<Registration />} />
             <Route  path="/search" element={< SearchSitter />} />
+            <Route  path="/searchglobal" element={< Search />} />
             <Route  path="/searchSitter" element={< SearchSitterTest />} />
             <Route  path="/sitterlisttest" element={< SitterListTestPagination />} />
             <Route  path="/sitterMatUi" element={< MatrialUiTable />} />

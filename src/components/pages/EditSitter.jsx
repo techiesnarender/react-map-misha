@@ -205,8 +205,8 @@ const EditSitter = () => {
 
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" color="success" onClick={handleClose}>No</Button>
-          <Button variant="contained"  color="error" onClick={deleteUser} autoFocus>
+          <Button variant="contained" color="error" onClick={handleClose}>No</Button>
+          <Button variant="contained"  color="success" onClick={deleteUser} autoFocus>
             Yes
           </Button>
         </DialogActions>
