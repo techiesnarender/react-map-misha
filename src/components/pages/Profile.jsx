@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Alert, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 // import { useNavigate } from "react-router-dom";
@@ -17,12 +17,28 @@ const Profile = () => {
   const [previewImage, setPreviewImage] = useState(undefined);
   const [progress, setProgress] = useState(0);
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
   const selectFile = (event) => {
+    event.preventDefault();
     setCurrentFile(event.target.files[0]);
     setPreviewImage(URL.createObjectURL(event.target.files[0]));
     setProgress(0);
     setMessage("");
+
+    const imageFile = event.target.files[0];
+
+    if (!imageFile) {
+      setError("Please select image." );
+      return false;
+    }else  if (!imageFile.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+      setError("Please select valid image.");
+      return false;
+    } else{
+      setError("");
+      return true;
+    }  
+
   };
 
   useEffect(() => {
@@ -95,6 +111,7 @@ const upload = () => {
   //       setImgLoading(false);
 	// 		});
 	// } ;
+
   return (
     <>
     <Helmet>
@@ -130,7 +147,7 @@ const upload = () => {
         Upload
         <input hidden accept="image/*" multiple type="file" onChange={selectFile} />
       </Button>
-
+      {error && <Alert severity="error">{error}</Alert>}
         {currentFile && (
       <div className="progress my-3">
         <div
@@ -144,14 +161,18 @@ const upload = () => {
           {progress}%
         </div>
       </div>     
-    )}
-        <Button variant="contained"
+    )}   
+    {!error && (
+          <Button variant="contained"
           color="secondary"
           className="ml-2"
-          disabled={!currentFile}
+          disabled={!currentFile}   
           onClick={upload}>           
             Save
         </Button>
+    )}
+        
+
     </div>
     {message && (
       <div className="alert alert-secondary mt-3" role="alert">
