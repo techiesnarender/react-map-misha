@@ -6,6 +6,7 @@ const Search = () => {
 
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
+  // eslint-disable-next-line
   const [pageSize, setPageSize] = useState(100);
 
   useEffect(() => {

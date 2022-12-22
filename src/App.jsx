@@ -20,35 +20,38 @@ import SitterListTestPagination from "./components/pages/SitterListTestPaginatio
 import NotFoundPage from "./components/pages/404";
 import MatrialUiTable from "./components/pages/MatrialUiTable";
 import Search from "./components/pages/search";
+import CheckConnection from "./components/pages/CheckConnection";
 
 
 const  App = () => {
   return (
-    <Router>
-      <div className="App">
-        <Navbar />
-        <Routes>
-            <Route exact path="/" element={<Home />} />  
-            <Route  path="/home" element={<Home />} />  
-            <Route  path="/register" element={<Registration />} />
-            <Route  path="/search" element={< SearchSitter />} />
-            <Route  path="/searchglobal" element={< Search />} />
-            <Route  path="/searchSitter" element={< SearchSitterTest />} />
-            <Route  path="/sitterlisttest" element={< SitterListTestPagination />} />
-            <Route  path="/sitterMatUi" element={< MatrialUiTable />} />
-            <Route  path="/formvalidation" element={< TestFormValidation />} />
-            <Route  path="/imagepreview" element={< TestImagePreview />} />
-            <Route  path="/admin/sitterlist" element={<SitterList />} />
-            <Route  path="/profile" element={<Profile />} />
-            <Route  path="/login" element={<Login />} />
-            <Route  path="/changepassword" element={<ChangePassword />} />
-            <Route  path="/forgetpassword" element={<ForgetPassword />} />
-            <Route  path="/editsitter/:id" element={<EditSitter />} />
-            <Route  path="/reset_password" element={<ResetPassword />} />
-            <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </div>
-    </Router>
+    <CheckConnection>
+      <Router>
+        <div className="App">
+          <Navbar />
+          <Routes>
+              <Route exact path="/" element={<Home />} />  
+              <Route  path="/home" element={<Home />} />  
+              <Route  path="/register" element={<Registration />} />
+              <Route  path="/search" element={< SearchSitter />} />
+              <Route  path="/searchglobal" element={< Search />} />
+              <Route  path="/searchSitter" element={< SearchSitterTest />} />
+              <Route  path="/sitterlisttest" element={< SitterListTestPagination />} />
+              <Route  path="/sitterMatUi" element={< MatrialUiTable />} />
+              <Route  path="/formvalidation" element={< TestFormValidation />} />
+              <Route  path="/imagepreview" element={< TestImagePreview />} />
+              <Route  path="/admin/sitterlist" element={<SitterList />} />
+              <Route  path="/profile" element={<Profile />} />
+              <Route  path="/login" element={<Login />} />
+              <Route  path="/changepassword" element={<ChangePassword />} />
+              <Route  path="/forgetpassword" element={<ForgetPassword />} />
+              <Route  path="/editsitter/:id" element={<EditSitter />} />
+              <Route  path="/reset_password" element={<ResetPassword />} />
+              <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </div>
+      </Router>
+    </CheckConnection>
   );
 }
 
