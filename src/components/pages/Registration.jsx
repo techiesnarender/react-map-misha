@@ -2,13 +2,7 @@
 import React, {useState, useEffect, useRef} from "react";
 import { Helmet } from "react-helmet-async";
 import UserServices from "../../services/UserServices";
-import MuiAlert from '@mui/material/Alert';
-import { Snackbar } from "@mui/material";
 import Notification from "./Notification";
-
-const Alert = React.forwardRef(function Alert(props, ref) {
-	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
 
 const Registration = () => {
 
@@ -16,7 +10,6 @@ const Registration = () => {
 	const [message, setMessage] = useState("");
 	const [messageColor, setMessageColor] = useState("");
 	
-
 	const handleClose = (event, reason) => {
 		if (reason === 'clickaway') {
 		return;
@@ -179,7 +172,6 @@ const Registration = () => {
 		enabled: true,
 	};
 	const [users, setUser] = useState(initialUserService);
-
 	const [loading, setLoading] = useState(false);
 
   /** Show error message variable */
@@ -236,7 +228,6 @@ const Registration = () => {
           logo: response.data.logo,
           enabled: response.data.enabled
         });		
-       // setSubmitted(true);
         setLoading(false);
 		setOpen(true);
 		setMessage("Your are successfully Registerd.");
@@ -254,11 +245,6 @@ const Registration = () => {
     }
      
 	};
-
-	// const newUser = () => {
-	// 	setUser(initialUserService);
-	// 	setSubmitted(false);
-	// };
 
   const formValidation = () => {
 // eslint-disable-next-line
@@ -337,23 +323,9 @@ const validateEmail = (email) => {
 			<Helmet>
 				<title>Register | Misha Infotech </title>
 			</Helmet>
-			{/* {submitted ? (
-				<div>
-					<h4>You submitted successfully!</h4>
-					<button className="btn btn-success" onClick={newUser}>
-						Add
-					</button>
-				</div>				
-			) : (				 */}
-			
-			
+
 			<Notification message={message} messageColor={messageColor} isOpen={open} onClose={handleClose}  />
 
-					{/* <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{	vertical: "top",horizontal: "right"}}>
-							<Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-								Your are successfully Registerd.
-							</Alert>
-						</Snackbar> */}
 				<div className="container" style={{width: '40rem'}}>
 				<div className="card">
 				  <div className="card-header text-white bg-info text-center h3">
@@ -470,11 +442,9 @@ const validateEmail = (email) => {
 						)}
 						<span> Submit</span>
 						</button>
-						{/* <button  className="btn btn-success">Submit</button> */}
 				  </div>
 				</div>
 			  </div>
-			 {/* )} */}
 		</div>
     );
 }
