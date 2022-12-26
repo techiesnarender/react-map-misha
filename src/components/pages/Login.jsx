@@ -6,8 +6,20 @@ import * as Yup from 'yup';
 
 import AuthService from "../../services/auth.service";
 import { Helmet } from "react-helmet-async";
+import Notification from "./Notification";
 
 const Login = () => {
+
+  const [open, setOpen] = useState(false);
+	const [messageNotofication, setMessageNotofication] = useState("");
+	const [messageColor, setMessageColor] = useState("");
+
+  const handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+		return;
+		}
+		setOpen(false);
+	};
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -49,16 +61,21 @@ const Login = () => {
             error.message ||
             error.toString();
             console.log(resMessage);
+            setOpen(true);
+            setMessageNotofication("Something went wrong.");
+		        setMessageColor("error");
           setLoading(false);
           setMessage( resMessage);
         }
       );
       };
   return (
+   
     <div className="col-md-12">
       <Helmet>
         <title>Login | Misha Infotech </title>
       </Helmet>
+      <Notification message={messageNotofication} messageColor={messageColor} isOpen={open} onClose={handleClose}  />
       <div className="card card-container">
         <img
           src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
