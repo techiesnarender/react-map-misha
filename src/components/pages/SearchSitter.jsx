@@ -28,6 +28,7 @@ const SearchSitter = () => {
   const [searchLong, setSearchLong] = useState("");
   const [loading, setLoading] = useState(false);
   const [active, setActive] = useState(null);
+  const [open, setOpen] = useState(false);
   // const [search, setSearch] = useState([]);
 
   useEffect(() => {
@@ -235,7 +236,7 @@ const SearchSitter = () => {
     });
   };
 
-  const [open, setOpen] = useState(false);
+  
 
   return (
     <div>
