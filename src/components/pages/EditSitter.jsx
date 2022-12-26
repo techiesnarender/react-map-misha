@@ -1,6 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid} from '@mui/material';
 import React, {useState, useEffect} from 'react'
 import { Helmet } from 'react-helmet-async';
+import DeleteIcon from '@mui/icons-material/Delete';
 import {useParams, useNavigate} from 'react-router-dom'
 import UserServices from '../../services/UserServices';
 import ErrorIcon from '@mui/icons-material/Error';
@@ -178,7 +179,7 @@ const EditSitter = () => {
         </button> */}
         
         
-      <Button variant="contained"  color="error" onClick={handleClickOpen} className="mr-2">
+      <Button variant="contained"  color="error" onClick={handleClickOpen} className="mr-2" startIcon={<DeleteIcon />}>
         Delete
       </Button>
       <Dialog

@@ -1,4 +1,5 @@
 /*global google*/
+import { Backdrop, CircularProgress } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import UserServices from "../../services/UserServices";
@@ -219,11 +220,13 @@ const SearchSitter = () => {
   };
 
   const findNearestLocation = () => {
+    setOpen(!open);
     setLoading(true);
     UserServices.findNearestLocation(searchAddress, searchLat, searchLong).then(
       (response) => {
         setUsers(response.data);
         setLoading(false);
+        setOpen(false);
         //console.log(response.data);
       }
     ).catch((error) => {
@@ -232,8 +235,16 @@ const SearchSitter = () => {
     });
   };
 
+  const [open, setOpen] = useState(false);
+
   return (
     <div>
+       <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Helmet>
         <title>Search Sitter | Misha Infotech </title>
       </Helmet>

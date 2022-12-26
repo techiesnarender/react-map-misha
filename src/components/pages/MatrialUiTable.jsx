@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Pagination from '@mui/material/Pagination'; 
 import UserServices from "../../services/UserServices";
-import { Paper, Skeleton, Stack, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Backdrop, CircularProgress, Paper, Skeleton, Stack, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -42,6 +42,7 @@ const MatrialUiTable = () => {
     const searchAddress = e.target.value;
     setSearchAddress(searchAddress);
     setPage(1);
+    
   };
 
   const getRequestParams = (searchAddress, page, pageSize) => {
@@ -60,12 +61,14 @@ const MatrialUiTable = () => {
   };
   
     const retrieveTutorials = () => {
+      setOpen(!open);
       setLoading(true);
       const params = getRequestParams(searchAddress,page, pageSize);
 
       UserServices.getPaginationAll(params)
         .then((response) => {
           const { user, totalPages, totalItems } = response.data;
+          setOpen(false);
           setLoading(false);
           setMessage("")
           setUsers(user);
@@ -94,8 +97,24 @@ const MatrialUiTable = () => {
       setPage(1);
     };
 
+    const [open, setOpen] = React.useState(false);
+
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
+  // const handleToggle = () => {
+  //   setOpen(!open);
+  // };
+
     return (
         <>
+
+    <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
               <div className="col-md-3">
                 <div className="input-group mt-3">
                   <input
