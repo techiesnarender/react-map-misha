@@ -12,11 +12,10 @@ const login = (email, password) => {
       }
       console.log(response.data);
       return response.data;
-      
     });
 };
 
-const changepassword = (oldpassword, newpassword, email) =>{
+const changepassword = (oldpassword, newpassword, email) => {
   return http
     .post("users/changepassword", {
       oldpassword,
@@ -26,11 +25,10 @@ const changepassword = (oldpassword, newpassword, email) =>{
     .then((response) => {
       console.log(response.data);
       return response.data;
-      
     });
-}
+};
 
-const fogetPassword = (email) =>{
+const fogetPassword = (email) => {
   return http
     .post("forgot_password", {
       email,
@@ -38,22 +36,20 @@ const fogetPassword = (email) =>{
     .then((response) => {
       console.log(response.data);
       return response.data;
-      
     });
-}
+};
 
-const resetPassword = (token, password) =>{
+const resetPassword = (token, password) => {
   return http
     .post("reset_password", {
       token,
-      password
+      password,
     })
     .then((response) => {
       console.log(response.data);
       return response.data;
-      
     });
-  }
+};
 
 const logout = () => {
   localStorage.removeItem("user");

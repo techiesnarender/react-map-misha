@@ -1,81 +1,81 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 
 import AuthService from "../../services/auth.service";
 import { Helmet } from "react-helmet-async";
 import Notification from "./Notification";
 
 const Login = () => {
-
   const [open, setOpen] = useState(false);
-	const [messageNotofication, setMessageNotofication] = useState("");
-	const [messageColor, setMessageColor] = useState("");
+  const [messageNotofication, setMessageNotofication] = useState("");
+  const [messageColor, setMessageColor] = useState("");
 
   const handleClose = (event, reason) => {
-		if (reason === 'clickaway') {
-		return;
-		}
-		setOpen(false);
-	};
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   let navigate = useNavigate();
 
-    const validationSchema = Yup.object().shape({
-        email: Yup.string()
-          .required('Email is required')
-          .email('Email is invalid'),
-        password: Yup.string()
-          .required('Password is required')
-          .min(4, 'Password must be at least 4 characters')
-          .max(40, 'Password must not exceed 40 characters'),
-      });
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().required("Email is required").email("Email is invalid"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(4, "Password must be at least 4 characters")
+      .max(40, "Password must not exceed 40 characters"),
+  });
 
-      const {
-        register,
-        handleSubmit,
-        formState: { errors }
-      } = useForm({
-        resolver: yupResolver(validationSchema)
-      });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
 
-
-      const onSubmit = data => {
-        setMessage("");
-        setLoading(true);
-        console.log(JSON.stringify(data, null, 2));
-      AuthService.login(data.email, data.password).then(
-        () => {
-          navigate("/profile");
-          window.location.reload();
-        },
-        (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-            console.log(resMessage);
-            setOpen(true);
-            setMessageNotofication("Something went wrong.");
-		        setMessageColor("error");
-          setLoading(false);
-          setMessage( resMessage);
-        }
-      );
-      };
+  const onSubmit = (data) => {
+    setMessage("");
+    setLoading(true);
+    console.log(JSON.stringify(data, null, 2));
+    AuthService.login(data.email, data.password).then(
+      () => {
+        navigate("/profile");
+        window.location.reload();
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        console.log(resMessage);
+        setOpen(true);
+        setMessageNotofication("Something went wrong.");
+        setMessageColor("error");
+        setLoading(false);
+        setMessage(resMessage);
+      }
+    );
+  };
   return (
-   
     <div className="col-md-12">
       <Helmet>
         <title>Login | Misha Infotech </title>
       </Helmet>
-      <Notification message={messageNotofication} messageColor={messageColor} isOpen={open} onClose={handleClose}  />
+      <Notification
+        message={messageNotofication}
+        messageColor={messageColor}
+        isOpen={open}
+        onClose={handleClose}
+      />
       <div className="card card-container">
         <img
           src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
@@ -88,20 +88,20 @@ const Login = () => {
             <input
               type="text"
               name="email"
-              {...register('email')}
-              className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+              {...register("email")}
+              className={`form-control ${errors.email ? "is-invalid" : ""}`}
             />
             <div className="invalid-feedback">{errors.email?.message}</div>
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
-              type="password"            
+              type="password"
               name="password"
-              {...register('password')}
-              className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+              {...register("password")}
+              className={`form-control ${errors.password ? "is-invalid" : ""}`}
             />
-             <div className="invalid-feedback">{errors.password?.message}</div>
+            <div className="invalid-feedback">{errors.password?.message}</div>
           </div>
           <div className="form-group">
             <button className="btn btn-primary btn-block" disabled={loading}>
@@ -120,7 +120,7 @@ const Login = () => {
           )}
         </form>
         <Link to={"/forgetpassword"} className="nav-link text-center">
-        Forget Password?
+          Forget Password?
         </Link>
       </div>
     </div>

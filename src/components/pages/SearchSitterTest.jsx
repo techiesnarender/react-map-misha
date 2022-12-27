@@ -3,13 +3,13 @@ import React, { useEffect, useRef, useState } from "react";
 import UserServices from "../../services/UserServices";
 
 const SearchSitterTest = () => {
-
   const effectRan = useRef(false);
   const click_ref = React.useRef(null);
   useEffect(() => {
     if (effectRan.current === false) {
       const script = document.createElement("script");
-      script.src ="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfL2oULbnrWbl_G-WdVcxGH8TfEme8dhk&libraries=places&callback=initMap";
+      script.src =
+        "https://maps.googleapis.com/maps/api/js?key=AIzaSyAfL2oULbnrWbl_G-WdVcxGH8TfEme8dhk&libraries=places&callback=initMap";
       script.async = true;
       document.body.appendChild(script);
       return () => {
@@ -32,36 +32,35 @@ const SearchSitterTest = () => {
         effectRan.current = true;
       };
     }
-   // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
+    var neighborhoods = [];
+    neighborhoods =
+      users &&
+      users.map((user) => ({
+        lat: parseFloat(user.latitude),
+        lng: parseFloat(user.longitude),
+        open: user.open,
+        company: user.company,
+        email: user.email,
+        logo: user.logo,
+      }));
 
-  var neighborhoods = [];
-  neighborhoods =
-    users &&
-    users.map((user) => ({
-      lat: parseFloat(user.latitude),
-      lng: parseFloat(user.longitude),
-      open: user.open,
-      company: user.company,
-      email: user.email,
-      logo: user.logo,
-    }));
-
-   console.log("MY Marker",neighborhoods)
+    console.log("MY Marker", neighborhoods);
 
     const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     // eslint-disable-next-line
     var map, markers, myLatlng;
-  
+
     function initMap() {
       //Getting Current geo locations for search box address
-     // console.log("MY Marker",neighborhoods)
+      // console.log("MY Marker",neighborhoods)
       var latElGeo = document.getElementById("lat"),
         longElGeo = document.getElementById("lng"),
         error = document.getElementById("demo");
-  
+
       window.onload = function getLocation() {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(showPosition);
@@ -69,7 +68,7 @@ const SearchSitterTest = () => {
           error.innerHTML = "Geolocation is not supported by this browser.";
         }
       };
-  
+
       function showPosition(position) {
         setNativeValue(latElGeo, position.coords.latitude);
         latElGeo.dispatchEvent(new Event("input", { bubbles: true }));
@@ -77,7 +76,7 @@ const SearchSitterTest = () => {
         longElGeo.dispatchEvent(new Event("input", { bubbles: true }));
       }
       // End of Getting Current geo locations for search box address
-  
+
       var mapOptions;
       mapOptions = {
         center: new google.maps.LatLng(28.62, 77.36),
@@ -91,7 +90,7 @@ const SearchSitterTest = () => {
         document.getElementById("map-canvas-search"),
         mapOptions
       );
-  
+
       //Current location svg image
       const svgMarker = {
         path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
@@ -102,37 +101,37 @@ const SearchSitterTest = () => {
         scale: 2,
         anchor: new google.maps.Point(15, 30),
       };
-  
+
       var x = navigator.geolocation;
       x.getCurrentPosition(success);
-  
+
       function success(position) {
         var myLat = position.coords.latitude;
         var myLng = position.coords.longitude;
         var myLatlng2 = new google.maps.LatLng(myLat, myLng);
-  
+
         var markerOption2 = new google.maps.Marker({
           position: myLatlng2,
           map: map,
           zoom: 8,
           icon: svgMarker,
         });
-  
+
         map.setCenter(myLatlng2);
         let marker2 = new google.maps.Marker(markerOption2);
         marker2.setMap(map);
         bounds.extend(myLatlng2);
-  
+
         google.maps.event.addListener(markerOption2, "click", (e) => {
           infoWindow.setContent("This is your current location");
           infoWindow.open(map, markerOption2);
         });
-  
+
         // Automatically center the map fitting all markers on the screen
         map.fitBounds(bounds);
         map.panToBounds(bounds);
       }
-  
+
       // Adding Multiple marker on google map and bounded with all map
       for (var i = 0; i < neighborhoods.length; i++) {
         var data = neighborhoods[i];
@@ -140,7 +139,7 @@ const SearchSitterTest = () => {
         myLatlng = new google.maps.LatLng(data.lat, data.lng);
         bounds.extend(myLatlng);
       }
-  
+
       // Code for onclick on tiles show marker lication center with infowindow
       markers = neighborhoods.map((location, i) => {
         // var myLatlng = new google.maps.LatLng(location.lat, location.lng);
@@ -149,7 +148,7 @@ const SearchSitterTest = () => {
           map: map,
           label: labels[i++ % labels.length],
         });
-  
+
         google.maps.event.addListener(marker, "mouseover", function (evt) {
           infoWin.setContent(
             '<img src="' +
@@ -166,22 +165,21 @@ const SearchSitterTest = () => {
         });
         return marker;
       });
-  
     }
-    
+
     setTimeout(() => {
-        initMap();
-      }, 1000);
+      initMap();
+    }, 1000);
 
-  window.initMap = initMap;
+    window.initMap = initMap;
 
-   //on click function
-   const myClick = (id) => {
-    map.setCenter(markers[id].getPosition());
-    map.setZoom(16);
-    google.maps.event.trigger(markers[id], 'mouseover');
-  } 
-  click_ref.current = myClick;
+    //on click function
+    const myClick = (id) => {
+      map.setCenter(markers[id].getPosition());
+      map.setZoom(16);
+      google.maps.event.trigger(markers[id], "mouseover");
+    };
+    click_ref.current = myClick;
   }, [users]);
 
   function setNativeValue(element, value) {
@@ -215,18 +213,18 @@ const SearchSitterTest = () => {
 
   const findNearestLocation = () => {
     setLoading(true);
-    UserServices.findNearestLocation(searchAddress, searchLat, searchLong).then(
-      (response) => {
+    UserServices.findNearestLocation(searchAddress, searchLat, searchLong)
+      .then((response) => {
         setUsers(response.data);
         setLoading(false);
         //console.log(response.data);
-      }
-    ).catch((error) => {
-      console.error('Error:', error);
-      setLoading(false);
-    });
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setLoading(false);
+      });
   };
-  
+
   //console.log("User"+users);
 
   //        // Fetching records based on nearest location
@@ -234,29 +232,29 @@ const SearchSitterTest = () => {
   //      {lat: 28.64, lng: 77.24 }
   //     ];
 
-    //   var neighborhoods = [
-    //      users &&
-    //       users.map((user) => ({
-    //         lat: parseFloat(user.latitude),
-    //         lng: parseFloat(user.longitude),
-    //       }))
-    //    ];
-    // console.log(neighborhoods);
+  //   var neighborhoods = [
+  //      users &&
+  //       users.map((user) => ({
+  //         lat: parseFloat(user.latitude),
+  //         lng: parseFloat(user.longitude),
+  //       }))
+  //    ];
+  // console.log(neighborhoods);
   // Fetching records based on nearest location
- //var neighborhoods = [];
+  //var neighborhoods = [];
   // neighborhoods =
   //   users &&
   //   users.map((user) => ({
   //     lat: parseFloat(user.latitude),
   //     lng: parseFloat(user.longitude),
   //   }));
-    
+
   // console.log("neighborhoods:",neighborhoods);
   //  var neighborhood = [];
   //  neighborhood.push(neighborhoods);
   //  console.log(neighborhood);
 
- // console.log(users);
+  // console.log(users);
 
   return (
     <div>
@@ -293,12 +291,16 @@ const SearchSitterTest = () => {
             onChange={onChangeSearchLong}
             style={{ display: "none" }}
           />
-         <button className="btn btn-primary" disabled={loading} onClick={findNearestLocation}>
-              {loading && (
-                <span className="spinner-border spinner-border-sm"></span>
-              )}
-              <span> Search</span>
-            </button>
+          <button
+            className="btn btn-primary"
+            disabled={loading}
+            onClick={findNearestLocation}
+          >
+            {loading && (
+              <span className="spinner-border spinner-border-sm"></span>
+            )}
+            <span> Search</span>
+          </button>
         </div>
         <div id="floating-panel"></div>
       </div>
@@ -312,13 +314,18 @@ const SearchSitterTest = () => {
               users.length > 0 &&
               users.map((user, index) => (
                 // eslint-disable-next-line
-                <a href="#" className="nav-link" key={user.id} onClick={()=>click_ref.current(index)}>
+                <a
+                  href="#"
+                  className="nav-link"
+                  key={user.id}
+                  onClick={() => click_ref.current(index)}
+                >
                   <div className="card" style={{ width: "33rem" }}>
                     <div className="card-body">
                       <div className="row">
                         <div className="col-sm-4">
                           <img
-                            src={user.logo} 
+                            src={user.logo}
                             alt=""
                             style={{ height: "100px", width: "100px" }}
                           />

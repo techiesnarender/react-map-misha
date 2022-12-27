@@ -29,157 +29,181 @@ const Profile = () => {
     const imageFile = event.target.files[0];
 
     if (!imageFile) {
-      setError("Please select image." );
+      setError("Please select image.");
       return false;
-    }else  if (!imageFile.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+    } else if (!imageFile.name.match(/\.(jpg|jpeg|png|gif)$/)) {
       setError("Please select valid image.");
       return false;
-    } else{
+    } else {
       setError("");
       return true;
-    }  
-
+    }
   };
 
   useEffect(() => {
-      retrieveUser();
-      // eslint-disable-next-line
-  },[]);
+    retrieveUser();
+    // eslint-disable-next-line
+  }, []);
 
-  const retrieveUser = () =>{
+  const retrieveUser = () => {
     setLoading(true);
-      UserServices.get(currentUserId)
-      .then(response => {
-          setUser(response.data);
-          setLoading(false);
-          console.log(response.data);
+    UserServices.get(currentUserId)
+      .then((response) => {
+        setUser(response.data);
+        setLoading(false);
+        console.log(response.data);
       })
-      .catch( e => {
-          console.log(e);
+      .catch((e) => {
+        console.log(e);
       });
   };
-/** Upload image code.. */
-const upload = () => {
-  setProgress(0);
-  UserServices.upload(currentFile, currentUser.email, (event) => {
-    setProgress(Math.round((100 * event.loaded) / event.total));
-  })
-    .then((response) => {
-      setMessage(response.data.message);
+  /** Upload image code.. */
+  const upload = () => {
+    setProgress(0);
+    UserServices.upload(currentFile, currentUser.email, (event) => {
+      setProgress(Math.round((100 * event.loaded) / event.total));
     })
-    .catch((err) => {
-      setProgress(0);
-      if (err.response && err.response.data && err.response.data.message) {
-        setMessage(err.response.data.message);
-      } else {
-        setMessage("Could not upload the Image!");
-      }
-      setCurrentFile(undefined);
-    });
-};
-	// const changeHandler = (event) => {
-	// 	setSelectedFile(event.target.files[0]);
-	// };
+      .then((response) => {
+        setMessage(response.data.message);
+      })
+      .catch((err) => {
+        setProgress(0);
+        if (err.response && err.response.data && err.response.data.message) {
+          setMessage(err.response.data.message);
+        } else {
+          setMessage("Could not upload the Image!");
+        }
+        setCurrentFile(undefined);
+      });
+  };
+  // const changeHandler = (event) => {
+  // 	setSelectedFile(event.target.files[0]);
+  // };
 
-	// const handleSubmission = () => {
+  // const handleSubmission = () => {
   //   setImgLoading(true);
-	// 	const formData = new FormData();
+  // 	const formData = new FormData();
 
-	// 	formData.append('file', selectedFile);
+  // 	formData.append('file', selectedFile);
   //   formData.append('email', currentUser.email);
 
-	// 	fetch(
+  // 	fetch(
   //     //'http://localhost:8080/api/users/uploadFile',
   //     'https://tomcat1.shiftescape.com/api/users/uploadFile',
-	// 		{
-	// 			method: 'POST',
-	// 			body: formData,
-	// 		}
-	// 	)
-	// 		.then( 
+  // 		{
+  // 			method: 'POST',
+  // 			body: formData,
+  // 		}
+  // 	)
+  // 		.then(
   //       () => {
   //         navigate("/profile");
   //         window.location.reload();
   //       },
   //       (response) => response.json() )
-	// 		.then((result) => {
-	// 			console.log('Success:', result);
+  // 		.then((result) => {
+  // 			console.log('Success:', result);
   //       setImgLoading(false);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.error('Error:', error);
+  // 		})
+  // 		.catch((error) => {
+  // 			console.error('Error:', error);
   //       setImgLoading(false);
-	// 		});
-	// } ;
+  // 		});
+  // } ;
 
   return (
     <>
-    <Helmet>
+      <Helmet>
         <title>Profile | Misha Infotech </title>
       </Helmet>
-    <div className="container">
-     
-      <h3 className="text-center"><strong>Sitter Profile</strong></h3>
-      {loading && (
-        <span className="spinner-border" style={{ position: "fixed", zIndex:"1031", top:"50%", left: "50%", transform: "initial" }}></span>
+      <div className="container">
+        <h3 className="text-center">
+          <strong>Sitter Profile</strong>
+        </h3>
+        {loading && (
+          <span
+            className="spinner-border"
+            style={{
+              position: "fixed",
+              zIndex: "1031",
+              top: "50%",
+              left: "50%",
+              transform: "initial",
+            }}
+          ></span>
         )}
-       <div className="row">
-       <div className="col-sm-3"> 
-          {previewImage ? (  
-              <img className="avatar rounded-circle img-thumbnail" src={previewImage} alt="" style={{height:"200px", width:"200px"}} /> 
-          ) :
-          <div>
-        <img
-            src={users.logo}
-            className="avatar rounded-circle img-thumbnail"
-            alt={users.contactname}
-            style={{height:"200px", width:"200px"}}
-          />
-          </div>
-          
-          }
-     <label htmlFor="logo" className="col-sm col-form-label font-weight-bold">Upload a different image...</label>
-        {/* <div className="btn btn-default mt-2">
+        <div className="row">
+          <div className="col-sm-3">
+            {previewImage ? (
+              <img
+                className="avatar rounded-circle img-thumbnail"
+                src={previewImage}
+                alt=""
+                style={{ height: "200px", width: "200px" }}
+              />
+            ) : (
+              <div>
+                <img
+                  src={users.logo}
+                  className="avatar rounded-circle img-thumbnail"
+                  alt={users.contactname}
+                  style={{ height: "200px", width: "200px" }}
+                />
+              </div>
+            )}
+            <label
+              htmlFor="logo"
+              className="col-sm col-form-label font-weight-bold"
+            >
+              Upload a different image...
+            </label>
+            {/* <div className="btn btn-default mt-2">
           <input type="file" id="logo" accept="image/*" onChange={selectFile} />
         </div> */}
 
-      <Button variant="contained" component="label">
-        Upload
-        <input hidden accept="image/*" multiple type="file" onChange={selectFile} />
-      </Button>
-      {error && <Alert severity="error">{error}</Alert>}
-        {currentFile && (
-      <div className="progress my-3">
-        <div
-          className="progress-bar progress-bar-info"
-          role="progressbar"
-          aria-valuenow={progress}
-          aria-valuemin="0"
-          aria-valuemax="100"
-          style={{ width: progress + "%" }}
-        >
-          {progress}%
-        </div>
-      </div>     
-    )}   
-    {!error && (
-          <Button variant="contained"
-          color="secondary"
-          className="ml-2"
-          disabled={!currentFile}   
-          onClick={upload}>           
-            Save
-        </Button>
-    )}
-        
+            <Button variant="contained" component="label">
+              Upload
+              <input
+                hidden
+                accept="image/*"
+                multiple
+                type="file"
+                onChange={selectFile}
+              />
+            </Button>
+            {error && <Alert severity="error">{error}</Alert>}
+            {currentFile && (
+              <div className="progress my-3">
+                <div
+                  className="progress-bar progress-bar-info"
+                  role="progressbar"
+                  aria-valuenow={progress}
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  style={{ width: progress + "%" }}
+                >
+                  {progress}%
+                </div>
+              </div>
+            )}
+            {!error && (
+              <Button
+                variant="contained"
+                color="secondary"
+                className="ml-2"
+                disabled={!currentFile}
+                onClick={upload}
+              >
+                Save
+              </Button>
+            )}
+          </div>
+          {message && (
+            <div className="alert alert-secondary mt-3" role="alert">
+              {message}
+            </div>
+          )}
 
-    </div>
-    {message && (
-      <div className="alert alert-secondary mt-3" role="alert">
-        {message}
-      </div>
-    )}
-     
           {/* <div className="col-sm-3">     
           <div className="text-center">
             
@@ -208,43 +232,43 @@ const upload = () => {
   </div>
   <br />
       </div> */}
-          <div className="col-sm-9">       
-          <header className="jumbotron"> 
-          <p>
-            <strong>Contact Name:</strong> <span>{users.contactname}</span>
-          </p>
-          <p>
-            <strong>Email:</strong> {users.email}
-          </p>
-          <p>
-            <strong>Company Name:</strong> {users.company}
-          </p>
-          <p>
-            <strong>Open Time:</strong> {users.open}
-          </p>
-          <p>
-            <strong>Close Time:</strong> {users.close}
-          </p>
-          <p>
-            <strong>Charges:</strong> {users.chargesperhour}
-          </p>
-          </header>
+          <div className="col-sm-9">
+            <header className="jumbotron">
+              <p>
+                <strong>Contact Name:</strong> <span>{users.contactname}</span>
+              </p>
+              <p>
+                <strong>Email:</strong> {users.email}
+              </p>
+              <p>
+                <strong>Company Name:</strong> {users.company}
+              </p>
+              <p>
+                <strong>Open Time:</strong> {users.open}
+              </p>
+              <p>
+                <strong>Close Time:</strong> {users.close}
+              </p>
+              <p>
+                <strong>Charges:</strong> {users.chargesperhour}
+              </p>
+            </header>
           </div>
-       </div>
-      {/* <p>
+        </div>
+        {/* <p>
         <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{" "}
         {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
       </p> */}
-      {/* <p>
+        {/* <p>
         <strong>Id:</strong> {currentUser.id}
       </p> */}
-     
-      {/* <strong>Authorities:</strong>
+
+        {/* <strong>Authorities:</strong>
       <ul>
         {currentUser.roles &&
           currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
       </ul> */}
-    </div>
+      </div>
     </>
   );
 };

@@ -4,8 +4,8 @@ import axios from "axios";
 export default axios.create({
   baseURL: "https://tomcat1.shiftescape.com/api/",
   headers: {
-    'Content-Type': 'application/json',
-  }
+    "Content-Type": "application/json",
+  },
 });
 
 //  Local api access

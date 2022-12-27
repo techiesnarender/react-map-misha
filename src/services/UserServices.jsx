@@ -9,12 +9,12 @@ const getPublicAll = () => {
   return http.get("/users");
 };
 
-const get = id => {
+const get = (id) => {
   return http.get(`/users/${id}`);
 };
 
-const create = data => {
-  console.log(data)
+const create = (data) => {
+  console.log(data);
   return http.post("/users", data);
 };
 
@@ -22,19 +22,21 @@ const update = (id, data) => {
   return http.post(`/users/edit/${id}`, data);
 };
 
-const remove = id => {
+const remove = (id) => {
   return http.post(`/users/delete/${id}`);
 };
 
 const findNearestLocation = (address, latitude, longitude) => {
-  return http.get(`/users/search?address=${address}&latitude=${latitude}&longitude=${longitude}`);
-}
+  return http.get(
+    `/users/search?address=${address}&latitude=${latitude}&longitude=${longitude}`
+  );
+};
 
-const upload = (file, email,  onUploadProgress) => {
+const upload = (file, email, onUploadProgress) => {
   let formData = new FormData();
 
   formData.append("file", file);
-  formData.append('email', email);
+  formData.append("email", email);
 
   return http.post("/users/uploadFile", formData, {
     headers: {
@@ -45,15 +47,14 @@ const upload = (file, email,  onUploadProgress) => {
 };
 
 const getPaginationAll = (params) => {
-  return http.get("/users/paging", { params }); 
- 
-};
-
-const getGlobalSearch = params => {
   return http.get("/users/paging", { params });
 };
 
-const UserServices =  {
+const getGlobalSearch = (params) => {
+  return http.get("/users/paging", { params });
+};
+
+const UserServices = {
   getAll,
   get,
   create,
@@ -63,7 +64,7 @@ const UserServices =  {
   upload,
   getPaginationAll,
   getPublicAll,
-  getGlobalSearch
+  getGlobalSearch,
 };
 
-export default  UserServices;
+export default UserServices;

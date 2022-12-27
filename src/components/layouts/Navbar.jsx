@@ -5,7 +5,7 @@ import AuthService from "../../services/auth.service";
 const Navbar = () => {
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
-  
+
   useEffect(() => {
     const user = AuthService.getCurrentUser();
 
@@ -15,7 +15,7 @@ const Navbar = () => {
     }
   }, []);
 
-  // Logout function 
+  // Logout function
   const logOut = () => {
     AuthService.logout();
   };
@@ -48,7 +48,7 @@ const Navbar = () => {
           </li> */}
           <li className="nav-item">
             <Link to={"/sitterMatUi"} className="nav-link">
-            Material UI Pagination
+              Material UI Pagination
             </Link>
           </li>
           {/* <li className="nav-item">
@@ -85,17 +85,26 @@ const Navbar = () => {
         {currentUser ? (
           <ul className="navbar-nav ml-auto">
             <li className="nav-item dropdown">
-              <Link to={"/profile"} className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <Link
+                to={"/profile"}
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
                 {currentUser.contactname}
               </Link>
 
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <Link to={"/profile"} className="dropdown-item" href="#">
-               Profile
-              </Link>
-              <Link to={"/changepassword"} className="dropdown-item" href="#">
-               Change Password?
-              </Link>
+                <Link to={"/profile"} className="dropdown-item" href="#">
+                  Profile
+                </Link>
+                <Link to={"/changepassword"} className="dropdown-item" href="#">
+                  Change Password?
+                </Link>
               </div>
             </li>
             <li className="nav-item">
@@ -122,4 +131,4 @@ const Navbar = () => {
     </div>
   );
 };
- export default Navbar;
+export default Navbar;
