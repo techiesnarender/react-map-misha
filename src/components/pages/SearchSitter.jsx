@@ -27,7 +27,7 @@ const SearchSitter = () => {
   const [searchLat, setSearchLat] = useState("");
   const [searchLong, setSearchLong] = useState("");
   const [loading, setLoading] = useState(false);
-  const [active, setActive] = useState(null);
+  const [active, setActive] = useState(false);
   const [open, setOpen] = useState(false);
   // const [search, setSearch] = useState([]);
 
@@ -52,6 +52,7 @@ const SearchSitter = () => {
         company: user.company,
         email: user.email,
         logo: user.logo,
+        id: user.id
       }));
 
     //console.log("MY Marker",neighborhoods)
@@ -76,6 +77,7 @@ const SearchSitter = () => {
       };
 
       function showPosition(position) {
+        // console.log(position);
         setNativeValue(latElGeo, position.coords.latitude);
         latElGeo.dispatchEvent(new Event("input", { bubbles: true }));
         setNativeValue(longElGeo, position.coords.longitude);
@@ -159,7 +161,7 @@ const SearchSitter = () => {
             label: labels[i++ % labels.length],
           });
 
-          google.maps.event.addListener(marker, "mouseover", function (evt) {
+          google.maps.event.addListener(marker, "click", function (evt) {
             infoWin.setContent(
               '<img src="' +
                 location.logo +
@@ -172,6 +174,10 @@ const SearchSitter = () => {
                 location.open
             );
             infoWin.open(map, marker);
+          });
+          
+          marker.addListener("click", () => {
+            document.getElementById("ids"+location.id).classList.add("active"); 
           });
           return marker;
         });
@@ -187,7 +193,7 @@ const SearchSitter = () => {
     const myClick = (id) => {
       map.setCenter(markers[id].getPosition());
       map.setZoom(16);
-      google.maps.event.trigger(markers[id], "mouseover");
+      google.maps.event.trigger(markers[id], "click");
     };
     click_ref.current = myClick;
   }, [users]);
@@ -342,12 +348,13 @@ const SearchSitter = () => {
                     style={{
                       width: "33rem",
                     }}
+                    //id={`ids${user.id}`}
                   >
-                    <div
-                      className={`card-body list-item ${
+                    <div className={`card-body list-item ${
                         active === index && "active"
                       }`}
                       onClick={() => setActive(index)}
+                      id={`ids${user.id}`}
                     >
                       <div className="row ">
                         <div className="col-sm-4">

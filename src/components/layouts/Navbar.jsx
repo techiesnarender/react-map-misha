@@ -51,6 +51,11 @@ const Navbar = () => {
               Material UI Pagination
             </Link>
           </li>
+          <li className="nav-item">
+            <Link to={"/testmatuipagination"} className="nav-link">
+              Test Pagination
+            </Link>
+          </li>
           {/* <li className="nav-item">
             <Link to={"/searchSitter"} className="nav-link">
               Test Search Sitter

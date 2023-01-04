@@ -21,6 +21,7 @@ import NotFoundPage from "./components/pages/404";
 import MatrialUiTable from "./components/pages/MatrialUiTable";
 import Search from "./components/pages/search";
 import CheckConnection from "./components/pages/CheckConnection";
+import TestMatUIPagination from "./components/pages/TestMatUIPagination";
 
 const App = () => {
   return (
@@ -40,6 +41,7 @@ const App = () => {
               element={<SitterListTestPagination />}
             />
             <Route path="/sitterMatUi" element={<MatrialUiTable />} />
+            <Route path="/testmatuipagination" element={< TestMatUIPagination />} />
             <Route path="/formvalidation" element={<TestFormValidation />} />
             <Route path="/imagepreview" element={<TestImagePreview />} />
             <Route path="/admin/sitterlist" element={<SitterList />} />
