@@ -230,7 +230,7 @@ const onChangeSearchCompany = (e) => {
       />
       <Box >
           <div className="float-right">
-            Showing the first  {pageSize * (page - 1) + 1}  -  { totalItems >= (pageSize * (page - 1) + pageSize)  ? (pageSize * (page - 1) + 10) : totalItems} results of {totalItems} rows
+           Showing the first  {pageSize * (page - 1) + 1}  -  { totalItems > (pageSize * (page - 1) + pageSize)  ? (pageSize * (page - 1) + pageSize) : totalItems} results of {totalItems} rows
           </div>
           <Typography>
             Page: {page} of {count}

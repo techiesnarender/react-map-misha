@@ -1,5 +1,5 @@
 /*global google*/
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Helmet } from "react-helmet-async";
 import UserServices from "../../services/UserServices";
 import Notification from "./Notification";
@@ -9,12 +9,12 @@ const Registration = () => {
   const [message, setMessage] = useState("");
   const [messageColor, setMessageColor] = useState("");
 
-  const handleClose = (event, reason) => {
+  const handleClose = useCallback((event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setOpen(false);
-  };
+  }, []);
 
   useEffect(() => {
     function initMap() {
@@ -338,13 +338,14 @@ const Registration = () => {
     return isValid;
   };
 
+ 
+
   return (
     <div className="submit-form">
       <Helmet>
         <title>Register | Misha Infotech </title>
       </Helmet>
 
-     
       <Notification
         message={message}
         messageColor={messageColor}
@@ -674,3 +675,5 @@ const Registration = () => {
   );
 };
 export default Registration;
+
+
