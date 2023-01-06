@@ -49,6 +49,9 @@ const upload = (file, email, onUploadProgress) => {
 const getPaginationAll = (params) => {
   return http.get("/users/paging", { params });
 };
+const getPaginationWithAddrAndCompany = (params) => {
+  return http.get("/users/pagination", { params });
+};
 
 const getGlobalSearch = (params) => {
   return http.get("/users/paging", { params });
@@ -65,6 +68,7 @@ const UserServices = {
   getPaginationAll,
   getPublicAll,
   getGlobalSearch,
+  getPaginationWithAddrAndCompany,
 };
 
 export default UserServices;

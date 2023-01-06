@@ -11,7 +11,9 @@ export default function Notification({
   message,
   isOpen,
   onClose,
-}) {
+}) 
+{
+  console.log("Notification Called");
   return (
     <Snackbar
       key={Math.random()}

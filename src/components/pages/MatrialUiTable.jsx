@@ -42,7 +42,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const MatrialUiTable = () => {
   const [users, setUsers] = useState([]);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [totalItems, setTotalItems] = useState("");
   const [pageSize, setPageSize] = useState(6);

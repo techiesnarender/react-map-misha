@@ -76,3 +76,9 @@ label {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+.MuiTablePagination-actions{
+  display: none;
+}
+.css-levciy-MuiTablePagination-displayedRows{
+  display: none;
+}

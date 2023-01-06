@@ -344,6 +344,7 @@ const Registration = () => {
         <title>Register | Misha Infotech </title>
       </Helmet>
 
+     
       <Notification
         message={message}
         messageColor={messageColor}
