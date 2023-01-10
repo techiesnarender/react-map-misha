@@ -177,7 +177,8 @@ const SearchSitter = () => {
             infoWin.open(map, marker);
           });
           google.maps.event.addListener(marker, 'click', function(){
-
+          map.setZoom(15);
+          map.setCenter(marker.getPosition());
           var cls = document.getElementsByClassName("active");
             // if(this.myId === i){
               cls[0].classList.remove("active");
