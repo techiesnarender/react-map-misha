@@ -159,8 +159,9 @@ const SearchSitter = () => {
             position: location,
             map: map,
             label: labels[i++ % labels.length],
+            myId: i,
           });
-
+          console.log(i);
           google.maps.event.addListener(marker, "click", function (evt) {
             infoWin.setContent(
               '<img src="' +
@@ -175,12 +176,19 @@ const SearchSitter = () => {
             );
             infoWin.open(map, marker);
           });
-          
-          marker.addListener("click", () => {
-            document.getElementById("ids"+location.id).classList.add("active"); 
-          });
+          google.maps.event.addListener(marker, 'click', function(){
+
+          var cls = document.getElementsByClassName("active");
+            // if(this.myId === i){
+              cls[0].classList.remove("active");
+            // }
+          document.getElementById(`ids${location.id}`).classList.add("active");
+        });
+
           return marker;
         });
+
+
     }
 
     setTimeout(() => {
@@ -350,7 +358,7 @@ const SearchSitter = () => {
                     }}
                     //id={`ids${user.id}`}
                   >
-                    <div className={`card-body list-item ${
+                    <div className={`card-body list-item  ${
                         active === index && "active"
                       }`}
                       onClick={() => setActive(index)}
