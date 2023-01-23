@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./components/layouts/Navbar";
 import Registration from "./components/pages/Registration";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -22,31 +22,38 @@ import MatrialUiTable from "./components/pages/MatrialUiTable";
 import Search from "./components/pages/search";
 import CheckConnection from "./components/pages/CheckConnection";
 import TestMatUIPagination from "./components/pages/TestMatUIPagination";
+import AuthService from "./services/auth.service";
 
 const App = () => {
+  const [navbar, setNavbar] = useState(true);
+  useEffect(() => {
+    const user = AuthService.getCurrentUser();
+
+    if (user) {
+      setNavbar(false);
+    }
+  }, []);
+
   return (
-    <CheckConnection>
+    // <CheckConnection>
       <Router>
         <div className="App">
-          <Navbar />
+        { (navbar) ? " " : <Navbar /> }
           <Routes>
-            <Route exact path="/" element={<Home />} />
+            <Route exact path={'/login'} element={<Login />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="/register" element={<Registration />} />
             <Route path="/search" element={<SearchSitter />} />
             <Route path="/searchglobal" element={<Search />} />
             <Route path="/searchSitter" element={<SearchSitterTest />} />
-            <Route
-              path="/sitterlisttest"
-              element={<SitterListTestPagination />}
-            />
+            <Route path="/sitterlisttest" element={<SitterListTestPagination />} />
             <Route path="/sitterMatUi" element={<MatrialUiTable />} />
             <Route path="/testmatuipagination" element={< TestMatUIPagination />} />
             <Route path="/formvalidation" element={<TestFormValidation />} />
             <Route path="/imagepreview" element={<TestImagePreview />} />
             <Route path="/admin/sitterlist" element={<SitterList />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/login" element={<Login />} />
             <Route path="/changepassword" element={<ChangePassword />} />
             <Route path="/forgetpassword" element={<ForgetPassword />} />
             <Route path="/editsitter/:id" element={<EditSitter />} />
@@ -55,7 +62,7 @@ const App = () => {
           </Routes>
         </div>
       </Router>
-    </CheckConnection>
+    // </CheckConnection>
   );
 };
 

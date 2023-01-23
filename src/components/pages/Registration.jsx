@@ -158,7 +158,8 @@ const Registration = () => {
       const script = document.createElement("script");
 
       script.src =
-        "https://maps.googleapis.com/maps/api/js?key=AIzaSyAfL2oULbnrWbl_G-WdVcxGH8TfEme8dhk&libraries=places&callback=initMap";
+        "https://maps.googleapis.com/maps/api/js?key=AIzaSyDKXKdHQdtqgPVl2HI2RnUa_1bjCxRCQo4&libraries=places&callback=initMap";
+        // "https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places&callback=initMap";
       script.async = true;
       document.body.appendChild(script);
       return () => {

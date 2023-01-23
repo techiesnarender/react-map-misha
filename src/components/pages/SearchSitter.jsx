@@ -5,14 +5,13 @@ import { Helmet } from "react-helmet-async";
 import UserServices from "../../services/UserServices";
 
 const SearchSitter = () => {
-  // const [search, setSearch] = useState("");
   const effectRan = useRef(false);
-  const click_ref = React.useRef(null);
+  const click_ref = useRef(null);
   useEffect(() => {
     if (effectRan.current === false) {
       const script = document.createElement("script");
       script.src =
-        "https://maps.googleapis.com/maps/api/js?key=AIzaSyAfL2oULbnrWbl_G-WdVcxGH8TfEme8dhk&libraries=places&callback=initMap";
+        "https://maps.googleapis.com/maps/api/js?key=AIzaSyDKXKdHQdtqgPVl2HI2RnUa_1bjCxRCQo4&libraries=places&callback=initMap";
       script.async = true;
       document.body.appendChild(script);
       return () => {
@@ -148,9 +147,11 @@ const SearchSitter = () => {
         //console.log(data);
         myLatlng = new google.maps.LatLng(data.lat, data.lng);
         bounds.extend(myLatlng);
+
+      
       }
 
-      // Code for onclick on tiles show marker lication center with infowindow
+      // Code for onclick on tiles show marker location center with infowindow
       markers =
         neighborhoods &&
         neighborhoods.map((location, i) => {
@@ -159,9 +160,9 @@ const SearchSitter = () => {
             position: location,
             map: map,
             label: labels[i++ % labels.length],
-            myId: i,
           });
-          console.log(i);
+
+           //OnClick on marker show infowindow with sitter details
           google.maps.event.addListener(marker, "click", function (evt) {
             infoWin.setContent(
               '<img src="' +
@@ -176,20 +177,27 @@ const SearchSitter = () => {
             );
             infoWin.open(map, marker);
           });
-          google.maps.event.addListener(marker, 'click', function(){
-          map.setZoom(15);
-          map.setCenter(marker.getPosition());
-          var cls = document.getElementsByClassName("active");
-            // if(this.myId === i){
-              cls[0].classList.remove("active");
-            // }
-          document.getElementById(`ids${location.id}`).classList.add("active");
-        });
 
+          google.maps.event.addListener(marker, "mouseout", function (evt) {  
+            infoWin.close();
+          });
+
+          //OnClick on marker showing sidebar higlighting sidebar tiles
+          google.maps.event.addListener(marker, 'click', function(){
+          // map.setZoom(13);
+          // map.setCenter(marker.getPosition());
+          var cls = document.getElementsByClassName("active");
+          cls[0].classList.remove("active");
+          document.getElementById(`ids${location.id}`).classList.add("active")
+
+          // on click of the marker scrolling the sidebar tiles
+          var scroll = document.getElementById("scroll");
+          var divOffset = document.getElementById(`idscroll${location.id}`).offsetTop;      
+          scroll.scrollTop = divOffset;
+
+        });
           return marker;
         });
-
-
     }
 
     setTimeout(() => {
@@ -244,7 +252,7 @@ const SearchSitter = () => {
         setUsers(response.data);
         setLoading(false);
         setOpen(false);
-        //console.log(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -264,6 +272,7 @@ const SearchSitter = () => {
       <Helmet>
         <title>Search Sitter | Misha Infotech </title>
       </Helmet>
+      <div id="demo"></div>
       <h4 className="text-center">Search Sitter</h4>
       <div className="container">
         <div className="input-group">
@@ -278,6 +287,7 @@ const SearchSitter = () => {
             aria-label="Search"
             aria-describedby="search-addon"
             required="required"
+          
           />
           <input
             type="text"
@@ -286,7 +296,7 @@ const SearchSitter = () => {
             className="form-control lat"
             value={searchLat}
             onChange={onChangeSearchLat}
-            style={{ display: "none" }}
+            style={{display:'none'}}
           />
           <input
             type="text"
@@ -295,7 +305,7 @@ const SearchSitter = () => {
             className="form-control lng"
             value={searchLong}
             onChange={onChangeSearchLong}
-            style={{ display: "none" }}
+            style={{display:'none'}}
           />
           <button
             className="btn btn-primary"
@@ -313,11 +323,13 @@ const SearchSitter = () => {
 
       {/************  Show list of sitter with nearest location  ***********************/}
 
-      <div className="container" style={{ marginTop: "10px" }}>
+      <div className="container" style={{ marginTop: "10px"}}>
+
         {/* <input type="text" placeholder="Search..."  onChange={(event) => {
                 setSearch(event.target.value)
             }}/>
         */}
+
         {/* {users &&
               users.length > 0 &&
               users.filter((user) => {
@@ -341,12 +353,13 @@ const SearchSitter = () => {
               ))} */}
 
         <div className="row">
-          <div className="col-sm-6 col-md-6 col-lg-6 col-xs-12">
+          <div className="col-sm-6 col-md-6 col-lg-6 col-xs-12" id="scroll" style={{ overflowY: "scroll", height:"600px", scrollBehavior:"smooth" }}>
             {users &&
               users.length > 0 &&
               users.map((user, index) => (
                 // eslint-disable-next-line
                 <a
+                id={`idscroll${user.id}`}
                   href="#"
                   className="nav-link"
                   key={user.id}
@@ -381,9 +394,12 @@ const SearchSitter = () => {
                             Hours: <span className="text-success">Open.</span>
                             {user.open}
                           </p>
-                          <p className="card-text text-muted">
+                          <p className="card-text text-muted" style={{marginTop:"-15px"}}>
                             Charge/hr : {user.chargesperhour}
-                          </p>
+                          </p> 
+                          <p className="card-text text-muted"  >
+                           <span style={{fontWeight: "bold", }}> Distance : </span>  {user.distance.substring(0, 4)}{" KM"}
+                          </p> 
                         </div>
                       </div>
                     </div>

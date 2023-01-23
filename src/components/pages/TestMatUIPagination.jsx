@@ -219,12 +219,12 @@ const onChangeSearchCompany = (e) => {
       <>
       <Pagination
       className="my-3"
-      color="primary"
+      color="secondary"
       count={count}
       page={page}
       siblingCount={1}
       boundaryCount={1}
-      //variant="outlined"
+      variant="outlined"
       //shape="rounded"
       onChange={handlePageChange}
       />
