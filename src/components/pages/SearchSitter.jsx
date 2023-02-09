@@ -51,7 +51,7 @@ const SearchSitter = () => {
         company: user.company,
         email: user.email,
         logo: user.logo,
-        id: user.id
+        id: user.id,
       }));
 
     //console.log("MY Marker",neighborhoods)
@@ -147,8 +147,6 @@ const SearchSitter = () => {
         //console.log(data);
         myLatlng = new google.maps.LatLng(data.lat, data.lng);
         bounds.extend(myLatlng);
-
-      
       }
 
       // Code for onclick on tiles show marker location center with infowindow
@@ -162,7 +160,7 @@ const SearchSitter = () => {
             label: labels[i++ % labels.length],
           });
 
-           //OnClick on marker show infowindow with sitter details
+          //OnClick on marker show infowindow with sitter details
           google.maps.event.addListener(marker, "click", function (evt) {
             infoWin.setContent(
               '<img src="' +
@@ -178,24 +176,27 @@ const SearchSitter = () => {
             infoWin.open(map, marker);
           });
 
-          google.maps.event.addListener(marker, "mouseout", function (evt) {  
+          google.maps.event.addListener(marker, "mouseout", function (evt) {
             infoWin.close();
           });
 
           //OnClick on marker showing sidebar higlighting sidebar tiles
-          google.maps.event.addListener(marker, 'click', function(){
-          // map.setZoom(13);
-          // map.setCenter(marker.getPosition());
-          var cls = document.getElementsByClassName("active");
-          cls[0].classList.remove("active");
-          document.getElementById(`ids${location.id}`).classList.add("active")
+          google.maps.event.addListener(marker, "click", function () {
+            // map.setZoom(13);
+            // map.setCenter(marker.getPosition());
+            var cls = document.getElementsByClassName("active");
+            cls[0].classList.remove("active");
+            document
+              .getElementById(`ids${location.id}`)
+              .classList.add("active");
 
-          // on click of the marker scrolling the sidebar tiles
-          var scroll = document.getElementById("scroll");
-          var divOffset = document.getElementById(`idscroll${location.id}`).offsetTop;      
-          scroll.scrollTop = divOffset;
-
-        });
+            // on click of the marker scrolling the sidebar tiles
+            var scroll = document.getElementById("scroll");
+            var divOffset = document.getElementById(
+              `idscroll${location.id}`
+            ).offsetTop;
+            scroll.scrollTop = divOffset;
+          });
           return marker;
         });
     }
@@ -287,7 +288,6 @@ const SearchSitter = () => {
             aria-label="Search"
             aria-describedby="search-addon"
             required="required"
-          
           />
           <input
             type="text"
@@ -296,7 +296,7 @@ const SearchSitter = () => {
             className="form-control lat"
             value={searchLat}
             onChange={onChangeSearchLat}
-            style={{display:'none'}}
+            style={{ display: "none" }}
           />
           <input
             type="text"
@@ -305,7 +305,7 @@ const SearchSitter = () => {
             className="form-control lng"
             value={searchLong}
             onChange={onChangeSearchLong}
-            style={{display:'none'}}
+            style={{ display: "none" }}
           />
           <button
             className="btn btn-primary"
@@ -323,8 +323,7 @@ const SearchSitter = () => {
 
       {/************  Show list of sitter with nearest location  ***********************/}
 
-      <div className="container" style={{ marginTop: "10px"}}>
-
+      <div className="container" style={{ marginTop: "10px" }}>
         {/* <input type="text" placeholder="Search..."  onChange={(event) => {
                 setSearch(event.target.value)
             }}/>
@@ -353,13 +352,21 @@ const SearchSitter = () => {
               ))} */}
 
         <div className="row">
-          <div className="col-sm-6 col-md-6 col-lg-6 col-xs-12" id="scroll" style={{ overflowY: "scroll", height:"600px", scrollBehavior:"smooth" }}>
+          <div
+            className="col-sm-6 col-md-6 col-lg-6 col-xs-12"
+            id="scroll"
+            style={{
+              overflowY: "scroll",
+              height: "600px",
+              scrollBehavior: "smooth",
+            }}
+          >
             {users &&
               users.length > 0 &&
               users.map((user, index) => (
                 // eslint-disable-next-line
                 <a
-                id={`idscroll${user.id}`}
+                  id={`idscroll${user.id}`}
                   href="#"
                   className="nav-link"
                   key={user.id}
@@ -372,7 +379,8 @@ const SearchSitter = () => {
                     }}
                     //id={`ids${user.id}`}
                   >
-                    <div className={`card-body list-item  ${
+                    <div
+                      className={`card-body list-item  ${
                         active === index && "active"
                       }`}
                       onClick={() => setActive(index)}
@@ -394,12 +402,20 @@ const SearchSitter = () => {
                             Hours: <span className="text-success">Open.</span>
                             {user.open}
                           </p>
-                          <p className="card-text text-muted" style={{marginTop:"-15px"}}>
+                          <p
+                            className="card-text text-muted"
+                            style={{ marginTop: "-15px" }}
+                          >
                             Charge/hr : {user.chargesperhour}
-                          </p> 
-                          <p className="card-text text-muted"  >
-                           <span style={{fontWeight: "bold", }}> Distance : </span>  {user.distance.substring(0, 4)}{" KM"}
-                          </p> 
+                          </p>
+                          <p className="card-text text-muted">
+                            <span style={{ fontWeight: "bold" }}>
+                              {" "}
+                              Distance :{" "}
+                            </span>{" "}
+                            {user.distance.substring(0, 4)}
+                            {" KM"}
+                          </p>
                         </div>
                       </div>
                     </div>

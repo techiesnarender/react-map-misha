@@ -12,12 +12,10 @@ export default function Notification({
   message,
   isOpen,
   onClose,
-}) 
-{
-  
+}) {
   useEffect(() => {
-    console.log("Notification Called...")
-  },[message,messageColor,isOpen,onClose] )
+    console.log("Notification Called...");
+  }, [message, messageColor, isOpen, onClose]);
   return (
     <Snackbar
       key={Math.random()}

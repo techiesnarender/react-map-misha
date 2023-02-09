@@ -49,7 +49,9 @@ const SitterList = () => {
             left: "50%",
             transform: "initial",
           }}
-        ></span>
+        >
+          {" "}
+        </span>
       )}
       <div className="table-responsive">
         <table

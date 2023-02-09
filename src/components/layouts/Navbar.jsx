@@ -56,6 +56,11 @@ const Navbar = () => {
               Test Pagination
             </Link>
           </li>
+          <li className="nav-item">
+            <Link to={"/editdatatable"} className="nav-link">
+              Edit DataGrid
+            </Link>
+          </li>
           {/* <li className="nav-item">
             <Link to={"/searchSitter"} className="nav-link">
               Test Search Sitter

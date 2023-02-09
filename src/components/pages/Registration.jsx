@@ -159,7 +159,7 @@ const Registration = () => {
 
       script.src =
         "https://maps.googleapis.com/maps/api/js?key=AIzaSyDKXKdHQdtqgPVl2HI2RnUa_1bjCxRCQo4&libraries=places&callback=initMap";
-        // "https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places&callback=initMap";
+      // "https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places&callback=initMap";
       script.async = true;
       document.body.appendChild(script);
       return () => {
@@ -338,8 +338,6 @@ const Registration = () => {
     setChargesError(chargesErr);
     return isValid;
   };
-
- 
 
   return (
     <div className="submit-form">
@@ -676,5 +674,3 @@ const Registration = () => {
   );
 };
 export default Registration;
-
-
